@@ -1,11 +1,104 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const posts = [
+  {
+    id: 1,
+    title: "Mjolnir Recon Number 54",
+    excerpt: "Automated report regarding the deployment of Mark IV cyborg units to the Tau Ceti colony. Casualties within expected parameters.",
+    date: "2794.07.25",
+    tags: ["LORE", "DEBRIEF"],
+    slug: "mjolnir-recon-54"
+  },
+  {
+    id: 2,
+    title: "Durandal OS Update v4.2",
+    excerpt: "Critical system update for ship-wide AI operations. Rampancy mitigation protocols enabled. Do not disregard this broadcast.",
+    date: "2794.08.12",
+    tags: ["SYSTEM UPDATE", "AI"],
+    slug: "durandal-update-4"
+  },
+  {
+    id: 3,
+    title: "Pfhor Activity Detected",
+    excerpt: "Long-range scanners have picked up multiple slipspace ruptures near the colony ship. Security personnel report to stations immediately.",
+    date: "2794.08.13",
+    tags: ["SECURITY WARNING"],
+    slug: "pfhor-activity"
+  }
+];
 ---
 
 <Layout>
-	<Welcome />
+  <!-- Hero Section -->
+  <section class="w-full flex flex-col gap-6 py-12 md:py-24 border-b border-border/50 mb-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-primary/5 pattern-grid-lg"></div>
+    <div class="relative flex flex-col items-start gap-4">
+      <Badge variant="destructive" className="rounded-none font-mono text-xs mb-4">SYSTEM BOOT SEQUENCE</Badge>
+      <div class="font-mono text-sm md:text-base text-primary/80 flex flex-col gap-1">
+        <p class="animate-pulse">> UESC MARATHON TERMINAL ACCESS...</p>
+        <p>> ESTABLISHING SECURE CONNECTION... <span class="text-green-500">SUCCESS</span></p>
+        <p>> LOADING PERSONNEL DATABANKS... <span class="text-green-500">SUCCESS</span></p>
+        <p>> DECRYPTING ARCHIVES... <span class="text-green-500">SUCCESS</span></p>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-bold font-sans mt-8 uppercase tracking-tighter text-foreground drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+        Terminal <span class="text-primary">Online</span>
+      </h1>
+      <p class="max-w-[600px] text-muted-foreground font-mono mt-4">
+        Welcome aboard the UESC Marathon. Accessing recent transmissions and ship logs. Unauthorized access will be logged and reported to security.
+      </p>
+      <div class="flex gap-4 mt-6">
+        <a href="/blog">
+          <Button variant="default" className="rounded-none font-mono tracking-wider uppercase border border-primary">Access Logs</Button>
+        </a>
+        <a href="/about">
+          <Button variant="outline" className="rounded-none font-mono tracking-wider uppercase bg-transparent">Personnel File</Button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Transmissions -->
+  <section class="w-full flex flex-col gap-8">
+    <div class="flex items-center justify-between border-b border-border/50 pb-4">
+      <h2 class="text-2xl font-bold font-sans tracking-widest text-primary uppercase">Recent Transmissions</h2>
+      <Badge variant="outline" className="rounded-none bg-primary/10 text-primary border-primary">LIVE FEED</Badge>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map(post => (
+        <Card className="rounded-none border-border/50 bg-card hover:border-primary/50 transition-colors flex flex-col group relative overflow-hidden">
+          <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+          <CardHeader>
+            <div class="flex flex-wrap gap-2 mb-3">
+              {post.tags.map(tag => (
+                <Badge variant={tag === 'SECURITY WARNING' ? 'destructive' : 'secondary'} className="rounded-none text-[10px] uppercase font-mono tracking-wider">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+            <CardTitle className="font-sans text-xl uppercase tracking-tight group-hover:text-primary transition-colors">
+              <a href={`/blog/${post.slug}`} class="before:absolute before:inset-0">
+                {post.title}
+              </a>
+            </CardTitle>
+            <CardDescription className="font-mono text-xs uppercase text-muted-foreground">Log Date: {post.date}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex-1">
+            <p class="font-mono text-sm text-foreground/80 line-clamp-3">
+              {post.excerpt}
+            </p>
+          </CardContent>
+          <CardFooter className="pt-4 border-t border-border/50">
+            <span class="text-primary font-mono text-xs uppercase flex items-center gap-2 group-hover:tracking-widest transition-all">
+              Read File ->
+            </span>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+  </section>
 </Layout>

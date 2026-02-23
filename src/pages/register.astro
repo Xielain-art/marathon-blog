@@ -1,0 +1,122 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+---
+
+<Layout>
+  <div
+    class="flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto"
+  >
+    <Card
+      className="w-full rounded-none border-primary/50 bg-card/60 backdrop-blur shadow-[0_0_30px_rgba(var(--primary),0.1)] relative overflow-hidden"
+    >
+      <!-- Decorative Corners -->
+      <div
+        class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary"
+      >
+      </div>
+      <div
+        class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-primary"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary"
+      >
+      </div>
+
+      <CardHeader
+        className="border-b border-primary/20 pb-3 text-center space-y-1"
+      >
+        <CardTitle
+          className="font-sans text-2xl uppercase tracking-widest text-foreground"
+        >
+          New Operative Enlistment
+        </CardTitle>
+        <p class="font-mono text-xs text-muted-foreground uppercase pt-1">
+          UESC Standard Form 7A
+        </p>
+      </CardHeader>
+
+      <CardContent className="p-4 sm:p-6">
+        <form class="flex flex-col gap-3" onsubmit="event.preventDefault();">
+          <div class="flex flex-col gap-2">
+            <Label
+              htmlFor="requestedId"
+              className="font-mono text-xs uppercase text-primary tracking-widest"
+            >
+              Requested ID
+            </Label>
+            <Input
+              id="requestedId"
+              placeholder="e.g. B-0129F"
+              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <Label
+              htmlFor="clearance"
+              className="font-mono text-xs uppercase text-primary tracking-widest flex items-center justify-between"
+            >
+              <span>Security Clearance Level</span>
+              <span class="text-[10px] text-muted-foreground"
+                >SUBJECT TO REVIEW</span
+              >
+            </Label>
+            <Input
+              id="clearance"
+              placeholder="LEVEL 1"
+              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <Label
+              htmlFor="newCode"
+              className="font-mono text-xs uppercase text-primary tracking-widest"
+            >
+              Create Access Code
+            </Label>
+            <Input
+              id="newCode"
+              type="password"
+              placeholder="••••••••"
+              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary tracking-widest"
+            />
+          </div>
+
+          <Button
+            type="button"
+            className="w-full h-12 rounded-none font-mono text-sm sm:text-base uppercase tracking-widest mt-2 bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground border border-transparent hover:border-primary transition-all"
+          >
+            Initialize Registration
+          </Button>
+        </form>
+      </CardContent>
+
+      <CardFooter
+        className="flex flex-col justify-center gap-2 border-t border-primary/20 pt-3 md:pt-4 font-mono text-sm"
+      >
+        <a
+          href="/login"
+          class="text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest hover:underline decoration-primary underline-offset-4 flex items-center gap-2"
+        >
+          <span>&lt;</span> Return to Login
+        </a>
+      </CardFooter>
+    </Card>
+  </div>
+</Layout>

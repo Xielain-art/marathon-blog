@@ -1,0 +1,167 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+const posts = [
+  {
+    id: 1,
+    title: "Mjolnir Recon Number 54",
+    excerpt:
+      "Automated report regarding the deployment of Mark IV cyborg units to the Tau Ceti colony. Casualties within expected parameters.",
+    date: "2794.07.25",
+    tags: ["LORE", "DEBRIEF"],
+    slug: "mjolnir-recon-54",
+  },
+  {
+    id: 2,
+    title: "Durandal OS Update v4.2",
+    excerpt:
+      "Critical system update for ship-wide AI operations. Rampancy mitigation protocols enabled. Do not disregard this broadcast.",
+    date: "2794.08.12",
+    tags: ["SYSTEM UPDATE", "AI"],
+    slug: "durandal-update-4",
+  },
+  {
+    id: 3,
+    title: "Pfhor Activity Detected",
+    excerpt:
+      "Long-range scanners have picked up multiple slipspace ruptures near the colony ship. Security personnel report to stations immediately.",
+    date: "2794.08.13",
+    tags: ["SECURITY WARNING"],
+    slug: "pfhor-activity",
+  },
+  {
+    id: 4,
+    title: "Maintenance Log: Sector 7G",
+    excerpt:
+      "Routine maintenance completed on biological processors. Minor organic buildup cleared from ventilation shafts.",
+    date: "2794.08.14",
+    tags: ["LOG", "MAINTENANCE"],
+    slug: "maintenance-sector-7g",
+  },
+  {
+    id: 5,
+    title: "Weapons Procurement Request",
+    excerpt:
+      "Requesting immediate resupply of SPNKr rocket launchers and fusion batteries. Current stockpile at 15%.",
+    date: "2794.08.15",
+    tags: ["SUPPLY", "REQUEST"],
+    slug: "weapons-procurement",
+  },
+];
+---
+
+<Layout>
+  <div class="flex flex-col gap-8 max-w-4xl w-full mx-auto">
+    <!-- Header Area -->
+    <div class="border-b border-border/50 pb-6">
+      <h1
+        class="text-3xl font-bold font-sans tracking-widest text-primary uppercase mb-2"
+      >
+        Ship Logs & Transmissions
+      </h1>
+      <p class="font-mono text-muted-foreground text-sm uppercase">
+        Accessing UESC Marathon Main Directory...
+      </p>
+    </div>
+
+    <!-- Search Section -->
+    <div
+      class="bg-card/50 border border-border/50 p-6 flex flex-col gap-4 relative overflow-hidden"
+    >
+      <div class="absolute inset-0 bg-primary/5 pattern-grid-lg opacity-50">
+      </div>
+      <div class="relative flex flex-col gap-2">
+        <Label
+          htmlFor="search"
+          className="font-mono text-primary tracking-widest uppercase flex items-center gap-2"
+        >
+          <span class="w-2 h-2 bg-primary animate-pulse"></span>
+          Query Local Databanks
+        </Label>
+        <div class="flex gap-4 w-full max-w-full">
+          <Input
+            id="search"
+            placeholder="ENTER SEARCH TERMS..."
+            className="font-mono rounded-none border-primary/50 focus-visible:ring-primary focus-visible:border-primary uppercase text-primary placeholder:text-primary/30 w-full max-w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Grid -->
+    <div class="grid grid-cols-1 gap-6">
+      {
+        posts.map((post) => (
+          <Card className="rounded-none border-border/50 bg-card hover:border-primary/50 transition-colors flex flex-col md:flex-row group relative overflow-hidden">
+            <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+
+            <div class="flex-1 flex flex-col">
+              <CardHeader className="pb-2">
+                <div class="flex flex-wrap gap-2 mb-2">
+                  {post.tags.map((tag) => (
+                    <Badge
+                      variant={
+                        tag === "SECURITY WARNING" ? "destructive" : "secondary"
+                      }
+                      className="rounded-none text-[10px] uppercase font-mono tracking-wider"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                  <Badge
+                    variant="outline"
+                    className="rounded-none text-[10px] uppercase font-mono border-border text-muted-foreground ml-auto"
+                  >
+                    {post.date}
+                  </Badge>
+                </div>
+                <CardTitle className="font-sans text-2xl uppercase tracking-tight group-hover:text-primary transition-colors">
+                  <a
+                    href={`/blog/${post.slug}`}
+                    class="before:absolute before:inset-0"
+                  >
+                    {post.title}
+                  </a>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="font-mono text-sm text-foreground/80">
+                  {post.excerpt}
+                </p>
+              </CardContent>
+            </div>
+
+            <div class="hidden md:flex flex-col items-center justify-center p-6 border-l border-border/50 bg-secondary/5 group-hover:bg-primary/5 transition-colors min-w-[120px]">
+              <span class="text-primary font-mono text-xs tracking-widest uppercase rotate-90 whitespace-nowrap opacity-50 group-hover:opacity-100 transition-opacity">
+                Access File
+              </span>
+            </div>
+          </Card>
+        ))
+      }
+    </div>
+
+    <!-- Pagination (Mock) -->
+    <div
+      class="flex justify-between items-center pt-6 border-t border-border/50 font-mono text-sm uppercase"
+    >
+      <span class="text-muted-foreground">Showing 1-5 of 1,024 records</span>
+      <div class="flex gap-2 text-primary">
+        <span class="opacity-50 cursor-not-allowed">&lt; PREV</span>
+        <span>|</span>
+        <span class="hover:underline cursor-pointer">NEXT ></span>
+      </div>
+    </div>
+  </div>
+</Layout>

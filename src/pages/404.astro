@@ -1,0 +1,72 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+---
+
+<Layout>
+  <div
+    class="flex-1 w-full flex flex-col items-center justify-center text-center py-20 relative min-h-[60vh]"
+  >
+    <!-- Background Glitch Effect Area -->
+    <div
+      class="absolute inset-0 z-0 flex items-center justify-center opacity-10 pointer-events-none select-none overflow-hidden"
+    >
+      <span
+        class="text-[20rem] font-black font-sans leading-none text-destructive filter blur-sm translate-x-4"
+        >404</span
+      >
+    </div>
+
+    <div
+      class="z-10 flex flex-col items-center gap-6 max-w-2xl bg-background/80 p-8 backdrop-blur sm:border sm:border-destructive/30 relative"
+    >
+      <!-- Decorative Borders -->
+      <div
+        class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-destructive"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-destructive"
+      >
+      </div>
+
+      <div
+        class="px-4 py-1 bg-destructive text-destructive-foreground font-mono font-bold text-sm tracking-widest uppercase animate-pulse"
+      >
+        Criticial System Failure
+      </div>
+
+      <h1
+        class="text-6xl md:text-8xl font-black font-sans uppercase tracking-tighter text-destructive drop-shadow-[0_0_15px_rgba(var(--destructive),0.8)]"
+      >
+        Signal Lost
+      </h1>
+
+      <div
+        class="font-mono text-sm md:text-base text-foreground/80 flex flex-col gap-2 max-w-lg mt-4 border-l-2 border-destructive pl-4 text-left"
+      >
+        <p>> FATAL ERROR 404</p>
+        <p>> DATABANK CORRUPTION DETECTED</p>
+        <p class="text-destructive font-bold">
+          > THE REQUESTED SECTOR DOES NOT EXIST DEPLOYMENT ABORTED
+        </p>
+      </div>
+
+      <div class="mt-8 flex flex-col gap-4 items-center">
+        <p
+          class="font-mono text-xs text-muted-foreground tracking-widest uppercase"
+        >
+          Perform hard reset to restore connection
+        </p>
+        <a href="/">
+          <Button
+            variant="outline"
+            className="h-14 px-8 rounded-none border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-mono text-lg tracking-widest uppercase transition-all shadow-[0_0_15px_rgba(var(--primary),0.2)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)]"
+          >
+            Return to Base
+          </Button>
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
