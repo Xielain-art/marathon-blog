@@ -12,7 +12,7 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="font-mono text-sm tracking-widest text-primary border border-primary/50 bg-secondary/20 hover:bg-primary/10 hover:border-primary px-3 py-1.5 transition-colors uppercase outline-none focus:ring-1 focus:ring-primary flex items-center gap-2">
-        <span>[ M-4927A ]</span>
+        <span>[ OPERATIVE@UESC.NET ]</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"

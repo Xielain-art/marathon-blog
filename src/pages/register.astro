@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 ---
 
-<Layout>
+<Layout title="Request Access">
   <div
     class="flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto px-0"
   >
@@ -34,46 +34,33 @@ import { Label } from "@/components/ui/label";
         <form class="flex flex-col gap-3" onsubmit="return false;">
           <div class="flex flex-col gap-2">
             <Label
-              htmlFor="requestedId"
+              htmlFor="email"
               className="font-mono text-xs uppercase text-primary tracking-widest"
             >
-              Requested ID
+              Email Address
             </Label>
             <Input
-              id="requestedId"
-              placeholder="e.g. B-0129F"
+              id="email"
+              type="email"
+              placeholder="USER@DOMAIN.COM"
+              required
               className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase h-12 w-full"
             />
           </div>
 
           <div class="flex flex-col gap-2">
             <Label
-              htmlFor="clearance"
-              className="font-mono text-xs uppercase text-primary tracking-widest flex items-center justify-between"
-            >
-              <span>Security Clearance Level</span>
-              <span class="text-[10px] text-muted-foreground"
-                >SUBJECT TO REVIEW</span
-              >
-            </Label>
-            <Input
-              id="clearance"
-              placeholder="LEVEL 1"
-              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase h-12 w-full"
-            />
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <Label
-              htmlFor="newCode"
+              htmlFor="accessCode"
               className="font-mono text-xs uppercase text-primary tracking-widest"
             >
               Create Access Code
             </Label>
             <Input
-              id="newCode"
+              id="accessCode"
               type="password"
               placeholder="••••••••"
+              required
+              minLength={8}
               className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary tracking-widest h-12 w-full"
             />
           </div>
@@ -110,7 +97,14 @@ import { Label } from "@/components/ui/label";
   ) as HTMLButtonElement;
 
   if (registerBtn) {
+    const form = registerBtn.closest("form");
+
     registerBtn.addEventListener("click", () => {
+      if (form && !form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
       const originalText = registerBtn.innerText;
       registerBtn.innerText = "PROCESSING...";
       registerBtn.disabled = true;

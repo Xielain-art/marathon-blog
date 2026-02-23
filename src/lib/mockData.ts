@@ -102,7 +102,7 @@ export const userComments = [
 
 export const vitalStats = [
   { label: "Name", value: null, skeleton: true },
-  { label: "ID Number", value: "M-4927A", highlight: true, blink: true },
+  { label: "Contact Email", value: "operative@uesc.net", highlight: true, blink: true },
   { label: "Status", value: "ACTIVE", green: true },
   { label: "User Role", value: "AUTHOR", badge: true },
   { label: "Join Date", value: "2794.01.01" },

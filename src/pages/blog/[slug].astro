@@ -27,7 +27,7 @@ const postTitle = slug
   : "TRANSMISSION DECRYPTED";
 ---
 
-<Layout>
+<Layout title={postTitle}>
   <!-- Reading Progress Bar -->
   <div
     id="reading-progress"
@@ -234,13 +234,15 @@ const postTitle = slug
           <form class="flex flex-col gap-4">
             <div class="flex flex-col gap-2">
               <Label
-                htmlFor="userId"
+                htmlFor="email"
                 className="font-mono text-xs uppercase text-primary tracking-widest"
-                >Operative ID</Label
+                >Email Address</Label
               >
               <Input
-                id="userId"
-                placeholder="ENTER ID DESIGNATION"
+                id="email"
+                type="email"
+                placeholder="USER@DOMAIN.COM"
+                required
                 className="font-mono rounded-none border-border focus-visible:ring-primary focus-visible:border-primary uppercase w-full max-w-full"
               />
             </div>
@@ -253,6 +255,7 @@ const postTitle = slug
               <Textarea
                 id="message"
                 placeholder="ENTER TRANSMISSION TEXT..."
+                required
                 className="min-h-[120px] font-mono rounded-none border-border focus-visible:ring-primary focus-visible:border-primary uppercase resize-none w-full max-w-full"
               />
             </div>

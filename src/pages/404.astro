@@ -3,11 +3,10 @@ import Layout from "../layouts/Layout.astro";
 import { Button } from "@/components/ui/button";
 ---
 
-<Layout>
+<Layout title="Connection Lost">
   <div
     class="flex-1 w-full flex flex-col items-center justify-center text-center py-12 md:py-20 relative min-h-[60vh]"
   >
-    <!-- Background Glitch Effect Area -->
     <div
       class="absolute inset-0 z-0 flex items-center justify-center opacity-10 pointer-events-none select-none overflow-hidden"
     >
@@ -20,7 +19,6 @@ import { Button } from "@/components/ui/button";
     <div
       class="z-10 flex flex-col items-center gap-6 max-w-2xl w-full bg-background/80 p-4 sm:p-8 backdrop-blur sm:border sm:border-destructive/30 relative mx-4"
     >
-      <!-- Decorative Borders -->
       <div
         class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-destructive"
       >
