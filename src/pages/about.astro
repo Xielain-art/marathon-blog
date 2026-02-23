@@ -2,6 +2,43 @@
 import Layout from "../layouts/Layout.astro";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+
+const recentPosts = [
+  {
+    id: 1,
+    title: "Recon Sweep Sector 4",
+    excerpt: "No anomalous readings detected. Life support systems nominal.",
+    date: "2794.08.11",
+    tags: ["LOG", "RECON"],
+    slug: "recon-sweep-4",
+  },
+  {
+    id: 2,
+    title: "Ammunition Discrepancy Report",
+    excerpt: "Noting a 5% deficit in expected MA-75 rounds in Armory 2B.",
+    date: "2794.08.09",
+    tags: ["LOGISTICS", "REPORT"],
+    slug: "ammo-report-2b",
+  },
+];
+
+const recentComments = [
+  {
+    author: "M-4927A",
+    targetId: "Durandal OS Update v4.2",
+    excerpt: "Acknowledged. Updating local firmware routines.",
+    date: "2794.08.12",
+  },
+];
 ---
 
 <Layout>
@@ -130,6 +167,92 @@ import { Badge } from "@/components/ui/badge";
           </div>
         </section>
 
+        <!-- Section: Recent Activity -->
+        <section class="flex flex-col gap-4">
+          <h2
+            class="font-sans text-2xl uppercase tracking-widest text-primary border-b border-border/50 pb-2 flex items-center gap-2"
+          >
+            <span class="w-2 h-2 bg-primary inline-block"></span>
+            Recent Activity
+          </h2>
+
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-3">
+              <h3
+                class="font-mono text-sm font-bold text-foreground uppercase tracking-widest"
+              >
+                Authored Dispatches
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {
+                  recentPosts.map((post) => (
+                    <Card className="rounded-none border-border/50 bg-card hover:border-primary/50 transition-colors flex flex-col group relative overflow-hidden">
+                      <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                      <CardHeader className="p-4 pb-2">
+                        <div class="flex flex-wrap gap-2 mb-2">
+                          {post.tags.map((tag) => (
+                            <Badge
+                              variant={
+                                tag === "SECURITY WARNING"
+                                  ? "destructive"
+                                  : "secondary"
+                              }
+                              className="rounded-none text-[8px] uppercase font-mono tracking-wider"
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        <CardTitle className="font-sans text-lg uppercase tracking-tight group-hover:text-primary transition-colors">
+                          <a
+                            href={`/blog/${post.slug}`}
+                            class="before:absolute before:inset-0"
+                          >
+                            {post.title}
+                          </a>
+                        </CardTitle>
+                        <CardDescription className="font-mono text-[10px] uppercase text-muted-foreground">
+                          {post.date}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0">
+                        <p class="font-mono text-xs text-foreground/80 line-clamp-2">
+                          {post.excerpt}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <h3
+                class="font-mono text-sm font-bold text-foreground uppercase tracking-widest"
+              >
+                Transmission Logs
+              </h3>
+              <div class="flex flex-col gap-4">
+                {
+                  recentComments.map((comment) => (
+                    <div class="flex flex-col gap-2 p-4 border border-border/50 bg-secondary/10">
+                      <div class="flex justify-between items-center font-mono text-xs uppercase border-b border-border/30 pb-1">
+                        <span class="text-primary">RE: {comment.targetId}</span>
+                        <span class="text-muted-foreground">
+                          {comment.date}
+                        </span>
+                      </div>
+                      <p class="font-mono text-sm text-foreground/80 mt-1">
+                        "{comment.excerpt}"
+                      </p>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Section: Service History -->
         <section class="flex flex-col gap-4">
           <h2
@@ -201,7 +324,7 @@ import { Badge } from "@/components/ui/badge";
 
         <!-- Warning Section -->
         <div
-          class="mt-8 border border-destructive/50 bg-destructive/10 p-4 p-6 relative overflow-hidden"
+          class="mt-4 border border-destructive/50 bg-destructive/10 p-4 p-6 relative overflow-hidden"
         >
           <div class="absolute left-0 top-0 bottom-0 w-2 bg-destructive"></div>
           <h3

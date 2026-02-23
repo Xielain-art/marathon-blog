@@ -1,0 +1,253 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+---
+
+<Layout>
+  <div class="max-w-4xl w-full mx-auto flex flex-col gap-8 py-8">
+    <!-- Header -->
+    <div class="border-b-4 border-primary pb-4 mb-2 relative overflow-hidden">
+      <div class="flex items-center gap-2 mb-2">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-primary"
+          ><path
+            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+          ></path><circle cx="12" cy="12" r="3"></circle></svg
+        >
+        <h1
+          class="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter text-foreground"
+        >
+          Operative Configuration
+        </h1>
+      </div>
+      <p
+        class="font-mono text-muted-foreground text-sm uppercase tracking-widest mt-2"
+      >
+        > MODIFYING LOCAL TERMINAL PARAMETERS...
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Interface Settings -->
+      <section class="flex flex-col gap-6">
+        <h2
+          class="font-sans text-2xl uppercase tracking-widest text-primary border-b border-border/50 pb-2"
+        >
+          Interface Settings
+        </h2>
+
+        <Card className="rounded-none border-primary/20 bg-card">
+          <CardContent className="p-6 flex flex-col gap-6">
+            <div class="flex items-center justify-between">
+              <div class="space-y-1">
+                <Label
+                  className="font-mono text-sm uppercase text-foreground tracking-widest"
+                  >CRT Scanlines</Label
+                >
+                <p class="font-mono text-xs text-muted-foreground">
+                  Toggle visual terminal degradation
+                </p>
+              </div>
+              <div class="flex items-center gap-2 font-mono text-sm">
+                <span class="text-muted-foreground">OFF</span>
+                <div
+                  class="w-10 h-5 border border-primary bg-primary/20 relative cursor-pointer"
+                >
+                  <div
+                    class="absolute right-0.5 top-0.5 bottom-0.5 w-3 bg-primary"
+                  >
+                  </div>
+                </div>
+                <span class="text-primary font-bold">ON</span>
+              </div>
+            </div>
+
+            <Separator className="bg-border/30" />
+
+            <div class="flex items-center justify-between">
+              <div class="space-y-1">
+                <Label
+                  className="font-mono text-sm uppercase text-foreground tracking-widest"
+                  >High Contrast Mode</Label
+                >
+                <p class="font-mono text-xs text-muted-foreground">
+                  Maximize terminal readability
+                </p>
+              </div>
+              <div class="flex items-center gap-2 font-mono text-sm">
+                <span class="text-primary font-bold">OFF</span>
+                <div
+                  class="w-10 h-5 border border-primary bg-background relative cursor-pointer"
+                >
+                  <div
+                    class="absolute left-0.5 top-0.5 bottom-0.5 w-3 bg-primary"
+                  >
+                  </div>
+                </div>
+                <span class="text-muted-foreground">ON</span>
+              </div>
+            </div>
+
+            <Separator className="bg-border/30" />
+
+            <div class="flex flex-col gap-3">
+              <div class="space-y-1">
+                <Label
+                  className="font-mono text-sm uppercase text-foreground tracking-widest"
+                  >Data Stream Volume</Label
+                >
+                <p class="font-mono text-xs text-muted-foreground">
+                  Adjust telemetry density
+                </p>
+              </div>
+              <div
+                class="w-full h-4 border border-primary bg-primary/10 relative cursor-pointer"
+              >
+                <div class="absolute left-0 top-0 bottom-0 w-[70%] bg-primary">
+                </div>
+                <div
+                  class="absolute left-[70%] top-0 bottom-0 w-1 bg-background drop-shadow-[0_0_2px_rgba(255,255,255,1)]"
+                >
+                </div>
+              </div>
+              <div
+                class="flex justify-between font-mono text-[10px] text-muted-foreground uppercase"
+              >
+                <span>Min</span>
+                <span>Max</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <!-- Update Credentials -->
+      <section class="flex flex-col gap-6">
+        <h2
+          class="font-sans text-2xl uppercase tracking-widest text-primary border-b border-border/50 pb-2"
+        >
+          Update Credentials
+        </h2>
+
+        <Card className="rounded-none border-primary/20 bg-card">
+          <CardContent className="p-6">
+            <form class="flex flex-col gap-5" onsubmit="return false;">
+              <div class="flex flex-col gap-2">
+                <Label
+                  htmlFor="oldCode"
+                  className="font-mono text-xs uppercase text-primary tracking-widest"
+                >
+                  Current Access Code
+                </Label>
+                <Input
+                  id="oldCode"
+                  type="password"
+                  placeholder="••••••••"
+                  className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary tracking-widest"
+                />
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <Label
+                  htmlFor="newCode"
+                  className="font-mono text-xs uppercase text-primary tracking-widest"
+                >
+                  New Access Code
+                </Label>
+                <Input
+                  id="newCode"
+                  type="password"
+                  placeholder="••••••••"
+                  className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary tracking-widest"
+                />
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <Label
+                  htmlFor="confirmCode"
+                  className="font-mono text-xs uppercase text-primary tracking-widest"
+                >
+                  Confirm New Code
+                </Label>
+                <Input
+                  id="confirmCode"
+                  type="password"
+                  placeholder="••••••••"
+                  className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary tracking-widest"
+                />
+              </div>
+
+              <Button
+                type="button"
+                className="w-full h-12 rounded-none font-mono text-sm uppercase tracking-widest mt-2 border border-primary hover:bg-primary hover:text-primary-foreground transition-all"
+                variant="outline"
+              >
+                Overwrite Credentials
+              </Button>
+            </form>
+          </CardContent>
+          <CardFooter
+            className="pt-0 p-6 flex items-start gap-2 border-t border-border/30 mt-4 pt-4"
+          >
+            <span class="text-destructive">!</span>
+            <p class="font-mono text-xs text-muted-foreground leading-tight">
+              Warning: Modifying access codes may temporarily disconnect you
+              from the active UESC stream. Proceed with caution.
+            </p>
+          </CardFooter>
+        </Card>
+      </section>
+    </div>
+
+    <!-- Danger Zone -->
+    <section class="flex flex-col gap-6 mt-8">
+      <Card
+        className="rounded-none border-destructive/50 bg-destructive/5 p-6 border-l-4 border-l-destructive"
+      >
+        <div
+          class="flex flex-col md:flex-row md:items-center justify-between gap-4"
+        >
+          <div class="flex flex-col gap-2">
+            <h3
+              class="font-sans text-xl font-bold uppercase text-destructive tracking-widest mb-1 flex items-center gap-2"
+            >
+              <span class="animate-pulse block w-2 h-2 bg-destructive"></span>
+              Purge Registration
+            </h3>
+            <p class="font-mono text-sm text-foreground/80">
+              Permanently delete this operative profile and all associated
+              transmission logs from the primary databanks. This action cannot
+              be undone.
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="destructive"
+            className="rounded-none font-mono tracking-widest uppercase md:w-auto w-full whitespace-nowrap"
+          >
+            Initiate Purge
+          </Button>
+        </div>
+      </Card>
+    </section>
+  </div>
+</Layout>

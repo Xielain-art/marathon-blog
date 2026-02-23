@@ -3,8 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AstroAvatar } from "@/components/AstroAvatar";
 
-const posts = [
+const priorityPost = {
+  id: "priority-1",
+  title: "Durandal OS Update v4.2 Deployment",
+  excerpt: "Critical system update for ship-wide AI operations. Rampancy mitigation protocols enabled. Do not disregard this broadcast. All secondary systems will experience brief downtime during cycle.",
+  date: "2794.08.12",
+  tags: ["SYSTEM UPDATE", "AI"],
+  slug: "durandal-update-4"
+};
+
+const recentPosts = [
   {
     id: 1,
     title: "Mjolnir Recon Number 54",
@@ -14,91 +24,215 @@ const posts = [
     slug: "mjolnir-recon-54"
   },
   {
-    id: 2,
-    title: "Durandal OS Update v4.2",
-    excerpt: "Critical system update for ship-wide AI operations. Rampancy mitigation protocols enabled. Do not disregard this broadcast.",
-    date: "2794.08.12",
-    tags: ["SYSTEM UPDATE", "AI"],
-    slug: "durandal-update-4"
-  },
-  {
     id: 3,
     title: "Pfhor Activity Detected",
     excerpt: "Long-range scanners have picked up multiple slipspace ruptures near the colony ship. Security personnel report to stations immediately.",
     date: "2794.08.13",
     tags: ["SECURITY WARNING"],
     slug: "pfhor-activity"
+  },
+  {
+    id: 4,
+    title: "Maintenance Log: Sector 7G",
+    excerpt: "Routine maintenance completed on biological processors. Minor organic buildup cleared from shafts.",
+    date: "2794.08.14",
+    tags: ["LOG", "MAINTENANCE"],
+    slug: "maintenance-sector-7g"
   }
+];
+
+const topContributors = [
+  { name: "BOB-7", role: "SECURITY", fallback: "B7", class: "text-primary" },
+  { name: "ENG-3", role: "MAINTENANCE", fallback: "E3", class: "text-destructive" },
+  { name: "SFO-2", role: "RECON", fallback: "S2", class: "text-yellow-500" },
 ];
 ---
 
 <Layout>
   <!-- Hero Section -->
-  <section class="w-full flex flex-col gap-6 py-12 md:py-24 border-b border-border/50 mb-12 relative overflow-hidden">
+  <section class="w-full flex flex-col gap-6 py-8 md:py-12 border-b border-border/50 mb-8 relative overflow-hidden">
     <div class="absolute inset-0 bg-primary/5 pattern-grid-lg"></div>
     <div class="relative flex flex-col items-start gap-4">
-      <Badge variant="destructive" className="rounded-none font-mono text-xs mb-4">SYSTEM BOOT SEQUENCE</Badge>
-      <div class="font-mono text-sm md:text-base text-primary/80 flex flex-col gap-1">
-        <p class="animate-pulse">> UESC MARATHON TERMINAL ACCESS...</p>
-        <p>> ESTABLISHING SECURE CONNECTION... <span class="text-green-500">SUCCESS</span></p>
-        <p>> LOADING PERSONNEL DATABANKS... <span class="text-green-500">SUCCESS</span></p>
-        <p>> DECRYPTING ARCHIVES... <span class="text-green-500">SUCCESS</span></p>
-      </div>
-      <h1 class="text-4xl md:text-6xl font-bold font-sans mt-8 uppercase tracking-tighter text-foreground drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-        Terminal <span class="text-primary">Online</span>
+      <Badge variant="destructive" className="rounded-none font-mono text-xs mb-2">NETWORK ACTIVE</Badge>
+      <h1 class="text-4xl md:text-6xl font-bold font-sans uppercase tracking-tighter text-foreground drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+        Community <span class="text-primary">Portal</span>
       </h1>
-      <p class="max-w-[600px] text-muted-foreground font-mono mt-4">
-        Welcome aboard the UESC Marathon. Accessing recent transmissions and ship logs. Unauthorized access will be logged and reported to security.
+      <p class="max-w-[600px] text-muted-foreground font-mono mt-2">
+        Welcome to the UESC Marathon operative network. Share dispatches, monitor system events, and coordinate with active personnel.
       </p>
-      <div class="flex gap-4 mt-6">
-        <a href="/blog">
-          <Button variant="default" className="rounded-none font-mono tracking-wider uppercase border border-primary">Access Logs</Button>
-        </a>
-        <a href="/about">
-          <Button variant="outline" className="rounded-none font-mono tracking-wider uppercase bg-transparent">Personnel File</Button>
-        </a>
-      </div>
     </div>
   </section>
 
-  <!-- Recent Transmissions -->
-  <section class="w-full flex flex-col gap-8">
-    <div class="flex items-center justify-between border-b border-border/50 pb-4">
-      <h2 class="text-2xl font-bold font-sans tracking-widest text-primary uppercase">Recent Transmissions</h2>
-      <Badge variant="outline" className="rounded-none bg-primary/10 text-primary border-primary">LIVE FEED</Badge>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {posts.map(post => (
-        <Card className="rounded-none border-border/50 bg-card hover:border-primary/50 transition-colors flex flex-col group relative overflow-hidden">
-          <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+  <!-- News Dashboard Layout -->
+  <div class="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
+    
+    <!-- Main Column -->
+    <div class="lg:col-span-2 flex flex-col gap-8">
+      
+      <!-- Priority Broadcast -->
+      <section class="flex flex-col gap-4">
+        <div class="flex items-center gap-2 border-b border-destructive/50 pb-2">
+          <span class="w-2 h-2 bg-destructive animate-pulse"></span>
+          <h2 class="text-xl font-bold font-sans tracking-widest text-destructive uppercase">Priority Broadcast</h2>
+        </div>
+        
+        <Card className="rounded-none border-destructive/50 bg-destructive/5 relative overflow-hidden group">
+          <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-destructive/50 to-transparent"></div>
           <CardHeader>
-            <div class="flex flex-wrap gap-2 mb-3">
-              {post.tags.map(tag => (
-                <Badge variant={tag === 'SECURITY WARNING' ? 'destructive' : 'secondary'} className="rounded-none text-[10px] uppercase font-mono tracking-wider">
+            <div class="flex flex-wrap gap-2 mb-2">
+              {priorityPost.tags.map(tag => (
+                <Badge variant="destructive" className="rounded-none text-[10px] uppercase font-mono tracking-wider">
                   {tag}
                 </Badge>
               ))}
+              <span class="font-mono text-xs text-muted-foreground ml-auto">{priorityPost.date}</span>
             </div>
-            <CardTitle className="font-sans text-xl uppercase tracking-tight group-hover:text-primary transition-colors">
-              <a href={`/blog/${post.slug}`} class="before:absolute before:inset-0">
-                {post.title}
+            <CardTitle className="font-sans text-3xl uppercase tracking-tight text-foreground group-hover:text-destructive transition-colors">
+              <a href={`/blog/${priorityPost.slug}`} class="before:absolute before:inset-0">
+                {priorityPost.title}
               </a>
             </CardTitle>
-            <CardDescription className="font-mono text-xs uppercase text-muted-foreground">Log Date: {post.date}</CardDescription>
           </CardHeader>
-          <CardContent className="flex-1">
-            <p class="font-mono text-sm text-foreground/80 line-clamp-3">
-              {post.excerpt}
+          <CardContent>
+            <p class="font-mono text-base text-foreground/80 leading-relaxed">
+              {priorityPost.excerpt}
             </p>
           </CardContent>
-          <CardFooter className="pt-4 border-t border-border/50">
-            <span class="text-primary font-mono text-xs uppercase flex items-center gap-2 group-hover:tracking-widest transition-all">
-              Read File ->
+          <CardFooter className="pt-4 border-t border-destructive/20">
+            <span class="text-destructive font-mono text-xs uppercase flex items-center gap-2 group-hover:tracking-widest transition-all">
+              Acknowledge & Read ->
             </span>
           </CardFooter>
         </Card>
-      ))}
+      </section>
+
+      <!-- Recent Dispatches -->
+      <section class="flex flex-col gap-4 mt-4">
+        <div class="flex items-center justify-between border-b border-border/50 pb-2">
+          <h2 class="text-xl font-bold font-sans tracking-widest text-primary uppercase">Recent Dispatches</h2>
+          <Badge variant="outline" className="rounded-none bg-primary/10 text-primary border-primary">LIVE</Badge>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {recentPosts.map(post => (
+            <Card className="rounded-none border-border/50 bg-card hover:border-primary/50 transition-colors flex flex-col group relative overflow-hidden">
+              <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <CardHeader>
+                <div class="flex flex-wrap gap-2 mb-3">
+                  {post.tags.map(tag => (
+                    <Badge variant={tag === 'SECURITY WARNING' ? 'destructive' : 'secondary'} className="rounded-none text-[10px] uppercase font-mono tracking-wider">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+                <CardTitle className="font-sans text-xl uppercase tracking-tight group-hover:text-primary transition-colors">
+                  <a href={`/blog/${post.slug}`} class="before:absolute before:inset-0">
+                    {post.title}
+                  </a>
+                </CardTitle>
+                <CardDescription className="font-mono text-xs uppercase text-muted-foreground">Log Date: {post.date}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <p class="font-mono text-sm text-foreground/80 line-clamp-3">
+                  {post.excerpt}
+                </p>
+              </CardContent>
+              <CardFooter className="pt-4 border-t border-border/50">
+                <span class="text-primary font-mono text-xs uppercase flex items-center gap-2 group-hover:tracking-widest transition-all">
+                  Read File ->
+                </span>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+        
+        <a href="/blog" class="w-full mt-4">
+          <Button variant="outline" className="w-full rounded-none tracking-widest uppercase font-mono border-primary/50 hover:bg-primary/10 hover:text-primary">
+            View All Dispatches
+          </Button>
+        </a>
+      </section>
+
     </div>
-  </section>
+
+    <!-- Sidebar -->
+    <aside class="lg:col-span-1 flex flex-col gap-8">
+      
+      <!-- System Status Widget -->
+      <Card className="rounded-none border-primary/50 bg-card relative overflow-hidden">
+        <div class="absolute top-0 right-0 p-2 opacity-10 pointer-events-none">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <CardHeader className="border-b border-border/50 pb-4">
+          <CardTitle className="font-sans text-lg uppercase tracking-widest text-primary">System Status</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4">
+          <ul class="flex flex-col gap-4 font-mono text-xs uppercase">
+            <li class="flex justify-between items-center">
+              <span class="text-muted-foreground">Network Load:</span>
+              <div class="flex items-center gap-2">
+                <span class="w-16 h-2 bg-secondary relative"><span class="absolute left-0 top-0 h-full bg-primary w-[34%]"></span></span>
+                <span class="text-primary">34%</span>
+              </div>
+            </li>
+            <li class="flex justify-between items-center">
+              <span class="text-muted-foreground">Active Operatives:</span>
+              <span class="text-foreground">1,204</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <span class="text-muted-foreground">Security Level:</span>
+              <Badge variant="outline" className="rounded-none text-[10px] border-yellow-500 text-yellow-500 px-1">ELEVATED</Badge>
+            </li>
+            <li class="flex justify-between items-center">
+              <span class="text-muted-foreground">AI Core Temp:</span>
+              <span class="text-foreground">84.2°C</span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
+      <!-- Popular Databanks -->
+      <Card className="rounded-none border-border/50 bg-card">
+        <CardHeader className="border-b border-border/50 pb-4">
+          <CardTitle className="font-sans text-lg uppercase tracking-widest text-foreground">Popular Databanks</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4">
+          <div class="flex flex-wrap gap-2">
+            <Badge variant="secondary" className="rounded-none hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors font-mono tracking-widest uppercase text-xs">LORE</Badge>
+            <Badge variant="secondary" className="rounded-none hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors font-mono tracking-widest uppercase text-xs">AI</Badge>
+            <Badge variant="destructive" className="rounded-none cursor-pointer transition-colors font-mono tracking-widest uppercase text-xs">SECURITY</Badge>
+            <Badge variant="secondary" className="rounded-none hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors font-mono tracking-widest uppercase text-xs">LOGISTICS</Badge>
+            <Badge variant="secondary" className="rounded-none hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors font-mono tracking-widest uppercase text-xs">MAINTENANCE</Badge>
+            <Badge variant="secondary" className="rounded-none hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors font-mono tracking-widest uppercase text-xs">PFHOR</Badge>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Top Contributors -->
+      <Card className="rounded-none border-border/50 bg-card">
+        <CardHeader className="border-b border-border/50 pb-4">
+          <CardTitle className="font-sans text-lg uppercase tracking-widest text-foreground">Top Contributors</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4 flex flex-col gap-4">
+          {topContributors.map((c) => (
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                 <AstroAvatar
+                  fallback={c.fallback}
+                  className="rounded-none border border-border w-8 h-8"
+                  fallbackClassName={`rounded-none bg-background font-mono font-bold ${c.class}`}
+                />
+                <div class="flex flex-col">
+                  <span class="font-mono text-sm uppercase font-bold text-foreground tracking-widest leading-none">{c.name}</span>
+                  <span class="font-mono text-[10px] uppercase text-muted-foreground mt-1">{c.role}</span>
+                </div>
+              </div>
+              <Badge variant="outline" className="rounded-none text-[10px] font-mono border-border text-primary">View</Badge>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+    </aside>
+  </div>
 </Layout>

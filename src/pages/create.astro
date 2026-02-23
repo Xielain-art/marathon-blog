@@ -1,0 +1,207 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+---
+
+<Layout>
+  <div
+    class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 py-8"
+  >
+    <!-- Main Form Area -->
+    <div class="lg:col-span-2 flex flex-col gap-6">
+      <div class="border-b-4 border-primary pb-4 mb-2 relative overflow-hidden">
+        <div
+          class="absolute right-0 top-0 text-primary/5 select-none font-bold text-7xl leading-none -mt-2 pointer-events-none"
+        >
+          TX
+        </div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="w-3 h-3 bg-primary animate-pulse"></span>
+          <h1
+            class="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter text-foreground"
+          >
+            Author New Dispatch
+          </h1>
+        </div>
+        <p
+          class="font-mono text-muted-foreground text-sm uppercase tracking-widest mt-2"
+        >
+          > ESTABLISHING UPLINK TO MAIN DATABANKS...
+        </p>
+      </div>
+
+      <Card
+        className="rounded-none border-primary/50 bg-card/60 relative overflow-hidden"
+      >
+        <div class="absolute inset-0 bg-primary/5 pattern-grid-lg opacity-30">
+        </div>
+        <CardContent className="p-6 relative z-10">
+          <form class="flex flex-col gap-6" onsubmit="return false;">
+            <div class="flex flex-col gap-3">
+              <Label
+                htmlFor="title"
+                className="font-mono text-sm uppercase text-primary tracking-widest"
+              >
+                TITLE / DESIGNATION
+              </Label>
+              <Input
+                id="title"
+                placeholder="ENTER DISPATCH TITLE..."
+                className="font-mono rounded-none border-border bg-background/80 focus-visible:ring-primary focus-visible:border-primary uppercase h-12 text-lg"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-3">
+                <Label
+                  htmlFor="category"
+                  className="font-mono text-sm uppercase text-primary tracking-widest"
+                >
+                  CATEGORY / TAGS
+                </Label>
+                <Input
+                  id="category"
+                  placeholder="e.g. LORE, SECURITY, LOG"
+                  className="font-mono rounded-none border-border bg-background/80 focus-visible:ring-primary focus-visible:border-primary uppercase"
+                />
+              </div>
+
+              <div class="flex flex-col gap-3">
+                <Label
+                  htmlFor="clearance"
+                  className="font-mono text-sm uppercase text-destructive tracking-widest flex justify-between"
+                >
+                  <span>CLEARANCE LEVEL</span>
+                  <span class="text-xs text-muted-foreground">REQ. AUTH</span>
+                </Label>
+                <select
+                  id="clearance"
+                  class="font-mono rounded-none border border-border bg-background/80 focus:ring-primary focus:border-primary uppercase text-foreground h-10 px-3 outline-none"
+                >
+                  <option value="public">PUBLIC (ALL OPERATIVES)</option>
+                  <option value="level3">RESTRICTED (LEVEL 3+)</option>
+                  <option value="omega">CLASSIFIED (OMEGA)</option>
+                </select>
+              </div>
+            </div>
+
+            <Separator className="bg-border/50 my-2" />
+
+            <div class="flex flex-col gap-3">
+              <Label
+                htmlFor="body"
+                className="font-mono text-sm uppercase text-primary tracking-widest flex items-center justify-between"
+              >
+                <span>TRANSMISSION BODY</span>
+                <span class="text-xs text-muted-foreground">MD_SUPPORTED</span>
+              </Label>
+              <Textarea
+                id="body"
+                placeholder="BEGIN TRANSMISSION DATA..."
+                className="font-mono rounded-none border-border bg-background/80 focus-visible:ring-primary focus-visible:border-primary uppercase min-h-[300px] resize-y p-4 leading-relaxed"
+              />
+            </div>
+
+            <div class="flex items-center justify-between mt-4">
+              <span
+                class="font-mono text-xs text-muted-foreground uppercase tracking-widest"
+              >
+                SIGNAL ENCRYPTED & SECURE
+              </span>
+              <Button
+                type="button"
+                className="h-14 px-8 rounded-none font-mono text-lg uppercase tracking-widest shadow-[0_0_15px_rgba(var(--primary),0.2)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)] transition-all"
+              >
+                Publish to Network
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Formatting Guidelines Sidebar -->
+    <aside class="lg:col-span-1 flex flex-col gap-6">
+      <Card
+        className="rounded-none border-border/50 bg-secondary/10 sticky top-24"
+      >
+        <CardHeader className="border-b border-border/50 bg-background/50 pb-4">
+          <CardTitle
+            className="font-sans text-lg uppercase tracking-widest text-foreground flex items-center gap-2"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-primary"
+              ><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"
+              ></path><path d="M12 8h.01"></path></svg
+            >
+            Transmission Protocol
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <div class="font-mono text-sm flex flex-col gap-6 text-foreground/80">
+            <p class="border-l-2 border-primary pl-3 text-primary/80">
+              All dispatches must adhere to UESC communication standards.
+              Unauthorized transmission of classified logistics is punishable by
+              summary execution.
+            </p>
+
+            <div class="flex flex-col gap-2">
+              <h3
+                class="text-primary uppercase tracking-widest font-bold text-xs"
+              >
+                Formatting Standards
+              </h3>
+              <ul
+                class="flex flex-col gap-2 list-none p-0 text-xs text-muted-foreground"
+              >
+                <li class="flex gap-2">
+                  <span class="text-primary">#</span> Use hashtags for primary headings
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-primary">></span> Use right angle bracket for
+                  blockquotes / system prompts
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-primary">**</span> Wrap text in double asterisks
+                  for bold classification
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-primary">`</span> Use backticks to denote raw
+                  data strings
+                </li>
+              </ul>
+            </div>
+
+            <Separator className="bg-border/30" />
+
+            <div class="flex flex-col gap-2">
+              <h3
+                class="text-destructive uppercase tracking-widest font-bold text-xs"
+              >
+                Clearance Enforcement
+              </h3>
+              <p class="text-xs text-muted-foreground">
+                Tagging a dispatch as OMEGA level automatically encrypts the
+                body text. Do not abuse restricted tags for routine chatter.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </aside>
+  </div>
+</Layout>
