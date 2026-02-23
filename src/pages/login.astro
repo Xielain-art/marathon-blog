@@ -53,10 +53,7 @@ import { Label } from "@/components/ui/label";
       </CardHeader>
 
       <CardContent className="p-4 sm:p-6">
-        <form
-          class="flex flex-col gap-3 sm:gap-4"
-          onsubmit="event.preventDefault();"
-        >
+        <form class="flex flex-col gap-3 sm:gap-4" onsubmit="return false;">
           <div class="flex flex-col gap-3">
             <Label
               htmlFor="operativeId"
