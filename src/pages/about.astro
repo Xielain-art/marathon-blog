@@ -2,17 +2,47 @@
 import Layout from "../layouts/Layout.astro";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import PostCard from "@/components/PostCard.astro";
 
-const recentPosts = [
+// ─── Data Arrays ─────────────────────────────────────────────────────────────
+
+const vitalStats = [
+  { label: "Name", value: null, skeleton: true },
+  { label: "ID Number", value: "M-4927A", highlight: true, blink: true },
+  { label: "Status", value: "ACTIVE", green: true },
+  { label: "Rank", value: null, skeleton: true },
+  { label: "Clearance", value: "LEVEL 5", badge: true },
+  { label: "Dispatches", value: "2" },
+  { label: "Net Status", value: "ONLINE", green: true },
+];
+
+const historyEvents = [
+  {
+    date: "2791.03.11",
+    location: "Martian Colonies",
+    desc: "Quelled uprising in biodome 4. Commendation for minimal structural damage during pacification.",
+    classified: false,
+    current: false,
+  },
+  {
+    date: "2792.11.04",
+    location: null, // skeleton
+    desc: "Details restricted. Requires Omega-level clearance to view deployment parameters regarding the Mjolnir initiative.",
+    classified: true,
+    current: false,
+  },
+  {
+    date: "2794.PRESENT",
+    location: "UESC Marathon",
+    desc: "Assigned to stasis block 2. Awaiting awakening procedures.",
+    classified: false,
+    current: true,
+  },
+];
+
+const userPosts = [
   {
     id: 1,
     title: "Recon Sweep Sector 4",
@@ -31,60 +61,71 @@ const recentPosts = [
   },
 ];
 
-const recentComments = [
+const userComments = [
   {
-    author: "M-4927A",
-    targetId: "Durandal OS Update v4.2",
-    excerpt: "Acknowledged. Updating local firmware routines.",
+    targetTitle: "Durandal OS Update v4.2",
+    targetSlug: "durandal-update-4",
+    excerpt: "Acknowledged. Updating local firmware routines as directed.",
     date: "2794.08.12",
+  },
+  {
+    targetTitle: "Pfhor Activity Detected",
+    targetSlug: "pfhor-activity",
+    excerpt:
+      "Confirmed slipspace breach on my end. Moving to security station now. Weapons check: nominal.",
+    date: "2794.08.13",
   },
 ];
 ---
 
 <Layout>
-  <div class="max-w-4xl w-full mx-auto flex flex-col gap-10 py-8">
-    <!-- Header -->
-    <div class="border-b-4 border-primary pb-4 mb-4">
-      <div class="flex justify-between items-end">
+  <div class="max-w-5xl w-full mx-auto flex flex-col gap-8 py-8">
+    <!-- Page Header -->
+    <div class="border-b-4 border-primary pb-4 relative overflow-hidden">
+      <div
+        class="absolute right-0 top-0 text-primary/5 select-none font-bold text-9xl leading-none -mt-4 pointer-events-none"
+      >
+        USR
+      </div>
+      <div class="flex justify-between items-end relative z-10">
         <h1
-          class="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter mix-blend-lighten text-foreground"
+          class="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter text-foreground"
         >
           Personnel File
         </h1>
         <Badge
           variant="destructive"
-          className="rounded-none font-mono text-sm mb-2 uppercase tracking-widest animate-pulse"
+          className="rounded-none font-mono text-xs mb-1 uppercase tracking-widest animate-pulse"
         >
           Confidential
         </Badge>
       </div>
-      <p class="font-mono text-primary text-sm uppercase tracking-widest mt-2">
-        > UESC MARATHON / ARCHIVE ACCESS // AUTHORIZED EYES ONLY
+      <p
+        class="font-mono text-primary text-xs uppercase tracking-widest mt-2 relative z-10"
+      >
+        &gt; UESC MARATHON / ARCHIVE ACCESS // AUTHORIZED EYES ONLY
       </p>
     </div>
 
-    <!-- Layout Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- ID Sidebar -->
-      <div
-        class="flex flex-col gap-6 md:col-span-1 border border-border/50 bg-secondary/10 p-4 h-fit"
+    <!-- Dashboard Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+      <!-- ── LEFT SIDEBAR: ID Card ───────────────────────────────────────── -->
+      <aside
+        class="flex flex-col gap-4 md:col-span-1 border border-primary/30 bg-secondary/10 p-4 sticky top-24"
       >
         <!-- Portrait Placeholder -->
         <div
           class="w-full aspect-[3/4] bg-background border border-border relative overflow-hidden group"
         >
           <div class="absolute inset-0 bg-primary/10 pattern-grid-lg"></div>
-
           <Skeleton
             className="w-full h-full rounded-none bg-primary/20 opacity-30"
           />
-
           <div
             class="absolute inset-0 flex items-center justify-center font-mono text-primary rotate-45 select-none opacity-50 uppercase tracking-widest text-xl"
           >
             NO IMAGE DATA
           </div>
-
           <!-- Scanner bar effect -->
           <div
             class="absolute inset-x-0 h-1 bg-primary/80 blur-[1px] shadow-[0_0_10px_rgba(var(--primary),0.8)] top-0 animate-[scan_3s_ease-in-out_infinite]"
@@ -92,256 +133,261 @@ const recentComments = [
           </div>
         </div>
 
-        <!-- Vital Stats -->
-        <div class="flex flex-col gap-3 font-mono text-sm uppercase">
-          <div class="flex justify-between border-b border-border/30 pb-1">
-            <span class="text-muted-foreground">Name:</span>
-            <span class="text-foreground text-right w-1/2 overflow-hidden">
-              <Skeleton className="h-4 w-full rounded-none bg-primary/20" />
-            </span>
-          </div>
-          <div class="flex justify-between border-b border-border/30 pb-1">
-            <span class="text-muted-foreground">ID Number:</span>
-            <span
-              class="text-foreground font-bold text-right"
-              style="letter-spacing: 0.1em;"
+        <!-- Vital Stats (data-driven) -->
+        <div class="flex flex-col gap-2 font-mono text-sm uppercase">
+          {
+            vitalStats.map((stat) => (
+              <div class="flex justify-between items-center border-b border-border/30 pb-1.5">
+                <span class="text-muted-foreground text-xs shrink-0 mr-2">
+                  {stat.label}:
+                </span>
+                {stat.skeleton ? (
+                  <Skeleton className="h-4 w-24 rounded-none bg-primary/20" />
+                ) : stat.badge ? (
+                  <Badge
+                    variant="outline"
+                    className="rounded-none text-[10px] border-primary text-primary px-1"
+                  >
+                    {stat.value}
+                  </Badge>
+                ) : (
+                  <span
+                    class={`font-bold text-right truncate max-w-[60%]
+                  ${stat.green ? "text-green-400" : ""}
+                  ${stat.highlight ? "text-primary" : "text-foreground"}
+                  ${stat.blink ? "animate-blink" : ""}
+                `}
+                  >
+                    {stat.value}
+                  </span>
+                )}
+              </div>
+            ))
+          }
+        </div>
+
+        <Separator className="bg-border/30" />
+
+        <!-- Configure Profile Button -->
+        <a href="/settings" class="w-full block">
+          <Button
+            variant="outline"
+            className="w-full rounded-none font-mono text-xs uppercase tracking-widest border-primary/50 hover:bg-primary/10 hover:text-primary transition-all h-10"
+          >
+            [ Configure Profile ]
+          </Button>
+        </a>
+      </aside>
+
+      <!-- ── MAIN CONTENT ────────────────────────────────────────────────── -->
+      <div class="flex flex-col gap-10 md:col-span-2">
+        <!-- ── Section 1: AUTHOR'S LOGS (User Posts) ───────────────────── -->
+        <section class="flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-primary/50 pb-2">
+            <span class="w-2 h-2 bg-primary animate-pulse inline-block shrink-0"
+            ></span>
+            <h2
+              class="font-sans text-xl uppercase tracking-widest text-primary"
             >
-              <span class="text-primary">M</span>-4927<span class="text-primary"
-                >A</span
-              >
-            </span>
-          </div>
-          <div class="flex justify-between border-b border-border/30 pb-1">
-            <span class="text-muted-foreground">Status:</span>
-            <span class="text-green-500 font-bold">ACTIVE</span>
-          </div>
-          <div class="flex justify-between border-b border-border/30 pb-1">
-            <span class="text-muted-foreground">Rank:</span>
-            <span class="text-foreground text-right w-2/3">
-              <Skeleton className="h-4 w-full rounded-none bg-primary/20" />
-            </span>
-          </div>
-          <div class="flex justify-between border-b border-border/30 pb-1">
-            <span class="text-muted-foreground">Clearance:</span>
+              Author's Logs
+            </h2>
             <Badge
               variant="outline"
-              className="rounded-none text-[10px] border-primary text-primary px-1"
-              >LEVEL 5</Badge
+              className="ml-auto rounded-none text-[10px] font-mono border-border text-muted-foreground"
             >
+              2 RECORDS
+            </Badge>
           </div>
-        </div>
-      </div>
 
-      <!-- Main Data Area -->
-      <div class="flex flex-col gap-8 md:col-span-2">
-        <!-- Section: Assignment -->
-        <section class="flex flex-col gap-4">
-          <h2
-            class="font-sans text-2xl uppercase tracking-widest text-primary border-b border-border/50 pb-2"
-          >
-            Current Assignment
-          </h2>
-          <div class="font-mono text-sm text-foreground/80 flex flex-col gap-2">
-            <p>
-              Operative is currently assigned to the UESC Marathon. Primary
-              function involves security detail and hazardous environment
-              operations.
-            </p>
-            <p
-              class="flex items-center flex-wrap gap-2 text-primary/70 bg-primary/5 p-2 border-l-2 border-primary"
-            >
-              <span class="text-destructive font-bold"
-                >[REDACTED EVENT LOG]</span
-              >
-              <Skeleton
-                className="h-4 w-[200px] inline-block rounded-none bg-foreground/20"
-              />
-              <Skeleton
-                className="h-4 w-[120px] inline-block rounded-none bg-foreground/20"
-              />
-              <Skeleton
-                className="h-4 w-[80px] inline-block rounded-none bg-foreground/20"
-              />
-              during the Tau Ceti orbit cycle.
-            </p>
+          <div class="grid grid-cols-1 gap-4">
+            {userPosts.map((post) => <PostCard post={post} />)}
           </div>
         </section>
 
-        <!-- Section: Recent Activity -->
+        <!-- ── Section 2: NETWORK TRANSMISSIONS (Comments) ─────────────── -->
         <section class="flex flex-col gap-4">
-          <h2
-            class="font-sans text-2xl uppercase tracking-widest text-primary border-b border-border/50 pb-2 flex items-center gap-2"
-          >
-            <span class="w-2 h-2 bg-primary inline-block"></span>
-            Recent Activity
-          </h2>
+          <div class="flex items-center gap-3 border-b border-border/50 pb-2">
+            <h2
+              class="font-sans text-xl uppercase tracking-widest text-foreground"
+            >
+              Recent Network Activity
+            </h2>
+            <Badge
+              variant="secondary"
+              className="ml-auto rounded-none text-[10px] font-mono"
+            >
+              {userComments.length} ENTRIES
+            </Badge>
+          </div>
 
-          <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-3">
+            {
+              userComments.map((comment) => (
+                <div class="flex flex-col gap-2 p-4 border-l-2 border-primary bg-primary/5 relative overflow-hidden">
+                  <div class="flex flex-wrap justify-between items-center font-mono text-xs uppercase gap-2">
+                    <a
+                      href={`/blog/${comment.targetSlug}`}
+                      class="text-primary hover:underline underline-offset-4 decoration-primary truncate max-w-[70%]"
+                    >
+                      RE: {comment.targetTitle}
+                    </a>
+                    <span class="text-muted-foreground shrink-0">
+                      {comment.date}
+                    </span>
+                  </div>
+                  <p class="font-mono text-sm text-foreground/80 leading-relaxed">
+                    "{comment.excerpt}"
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- ── Section 3: RESTRICTED DOSSIER ─────────────────────────── -->
+        <section class="flex flex-col gap-4">
+          <div
+            class="flex items-center gap-3 border-b border-destructive/40 pb-2"
+          >
+            <span
+              class="w-2 h-2 bg-destructive animate-pulse inline-block shrink-0"
+            ></span>
+            <h2
+              class="font-sans text-xl uppercase tracking-widest text-destructive"
+            >
+              Restricted Personnel Data
+            </h2>
+          </div>
+
+          <div
+            class="border border-border/40 bg-secondary/5 p-4 sm:p-6 flex flex-col gap-8"
+          >
+            <!-- Current Assignment -->
             <div class="flex flex-col gap-3">
               <h3
-                class="font-mono text-sm font-bold text-foreground uppercase tracking-widest"
+                class="font-mono text-xs font-bold text-primary uppercase tracking-widest"
               >
-                Authored Dispatches
+                // Current Assignment
               </h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {
-                  recentPosts.map((post) => (
-                    <Card className="rounded-none border-border/50 bg-card hover:border-primary/50 transition-colors flex flex-col group relative overflow-hidden">
-                      <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                      <CardHeader className="p-4 pb-2">
-                        <div class="flex flex-wrap gap-2 mb-2">
-                          {post.tags.map((tag) => (
-                            <Badge
-                              variant={
-                                tag === "SECURITY WARNING"
-                                  ? "destructive"
-                                  : "secondary"
-                              }
-                              className="rounded-none text-[8px] uppercase font-mono tracking-wider"
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                        <CardTitle className="font-sans text-lg uppercase tracking-tight group-hover:text-primary transition-colors">
-                          <a
-                            href={`/blog/${post.slug}`}
-                            class="before:absolute before:inset-0"
-                          >
-                            {post.title}
-                          </a>
-                        </CardTitle>
-                        <CardDescription className="font-mono text-[10px] uppercase text-muted-foreground">
-                          {post.date}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-0">
-                        <p class="font-mono text-xs text-foreground/80 line-clamp-2">
-                          {post.excerpt}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  ))
-                }
+              <div
+                class="font-mono text-sm text-foreground/80 flex flex-col gap-2"
+              >
+                <p>
+                  Operative is currently assigned to the UESC Marathon. Primary
+                  function involves security detail and hazardous environment
+                  operations.
+                </p>
+                <p
+                  class="flex items-center flex-wrap gap-2 text-primary/70 bg-primary/5 p-2 border-l-2 border-primary"
+                >
+                  <span class="text-destructive font-bold"
+                    >[REDACTED EVENT LOG]</span
+                  >
+                  <Skeleton
+                    className="h-4 w-[150px] inline-block rounded-none bg-foreground/20"
+                  />
+                  <Skeleton
+                    className="h-4 w-[100px] inline-block rounded-none bg-foreground/20"
+                  />
+                  <Skeleton
+                    className="h-4 w-[60px] inline-block rounded-none bg-foreground/20"
+                  />
+                  during the Tau Ceti orbit cycle.
+                </p>
               </div>
             </div>
 
+            <Separator className="bg-border/20" />
+
+            <!-- Service History Timeline (data-driven) -->
             <div class="flex flex-col gap-3">
               <h3
-                class="font-mono text-sm font-bold text-foreground uppercase tracking-widest"
+                class="font-mono text-xs font-bold text-primary uppercase tracking-widest"
               >
-                Transmission Logs
+                // Service History
               </h3>
-              <div class="flex flex-col gap-4">
+              <ul
+                class="font-mono text-sm text-foreground/80 flex flex-col gap-5 list-none p-0"
+              >
                 {
-                  recentComments.map((comment) => (
-                    <div class="flex flex-col gap-2 p-4 border border-border/50 bg-secondary/10">
-                      <div class="flex justify-between items-center font-mono text-xs uppercase border-b border-border/30 pb-1">
-                        <span class="text-primary">RE: {comment.targetId}</span>
-                        <span class="text-muted-foreground">
-                          {comment.date}
+                  historyEvents.map((event) => (
+                    <li class="pl-4 border-l border-primary/30 relative">
+                      <span
+                        class={`absolute w-2 h-2 left-[-5px] top-1 block
+                      ${event.current ? "bg-green-500 shadow-[0_0_5px_rgba(34,197,94,1)]" : "bg-primary"}
+                    `}
+                      />
+
+                      <div class="flex flex-wrap justify-between text-xs text-muted-foreground mb-1 uppercase tracking-widest gap-1">
+                        <span class={event.current ? "text-primary" : ""}>
+                          {event.date}
                         </span>
+                        {event.location ? (
+                          <span class="truncate max-w-[60%]">
+                            {event.location}
+                          </span>
+                        ) : (
+                          <Skeleton className="h-3 w-[120px] rounded-none bg-foreground/20" />
+                        )}
                       </div>
-                      <p class="font-mono text-sm text-foreground/80 mt-1">
-                        "{comment.excerpt}"
-                      </p>
-                    </div>
+
+                      <div class="relative">
+                        <p
+                          class={
+                            event.classified
+                              ? "opacity-40 blur-[2px] select-none"
+                              : ""
+                          }
+                        >
+                          {event.desc}
+                        </p>
+                        {event.classified && (
+                          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <Badge
+                              variant="destructive"
+                              className="rounded-none font-mono tracking-widest uppercase"
+                            >
+                              CLASSIFIED
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
+                    </li>
                   ))
                 }
+              </ul>
+            </div>
+
+            <Separator className="bg-border/20" />
+
+            <!-- Psychological Evaluation Alert -->
+            <div
+              class="border border-destructive/50 bg-destructive/10 p-4 relative overflow-hidden"
+            >
+              <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-destructive">
               </div>
+              <h3
+                class="font-sans text-base font-bold uppercase text-destructive tracking-widest mb-2 flex items-center gap-2 pl-2"
+              >
+                <span
+                  class="animate-pulse block w-2.5 h-2.5 bg-destructive shrink-0"
+                ></span>
+                Psychological Evaluation Alert
+              </h3>
+              <p
+                class="font-mono text-sm text-foreground/80 pl-2 leading-relaxed"
+              >
+                Recent scans indicate elevated stress patterns and potential
+                neural degradation consistent with deep-sleep side effects.
+                Subject is to be monitored closely for aggressive tendencies
+                upon revival. Repeated interactions with rampancy-prone AI
+                cores&nbsp;<Skeleton
+                  className="h-4 w-[50px] inline-block align-middle rounded-none bg-foreground/20"
+                />&nbsp;strongly discouraged.
+              </p>
             </div>
           </div>
         </section>
-
-        <!-- Section: Service History -->
-        <section class="flex flex-col gap-4">
-          <h2
-            class="font-sans text-2xl uppercase tracking-widest text-primary border-b border-border/50 pb-2"
-          >
-            Service History
-          </h2>
-
-          <ul
-            class="font-mono text-sm text-foreground/80 flex flex-col gap-4 list-none p-0"
-          >
-            <li class="pl-4 border-l border-primary/30 relative">
-              <span class="absolute w-2 h-2 bg-primary left-[-4px] top-1"
-              ></span>
-              <div
-                class="flex justify-between text-xs text-muted-foreground mb-1 uppercase tracking-widest"
-              >
-                <span>2791.03.11</span>
-                <span>Martian Colonies</span>
-              </div>
-              <p>
-                Quelled uprising in biodome 4. Commendation for minimal
-                structural damage during pacification.
-              </p>
-            </li>
-
-            <li class="pl-4 border-l border-primary/30 relative">
-              <span class="absolute w-2 h-2 bg-primary left-[-4px] top-1"
-              ></span>
-              <div
-                class="flex justify-between text-xs text-muted-foreground mb-1 uppercase tracking-widest"
-              >
-                <span>2792.11.04</span>
-                <span
-                  ><Skeleton
-                    className="h-3 w-[150px] inline-block rounded-none bg-foreground/20"
-                  /></span
-                >
-              </div>
-              <p class="opacity-50 blur-[1px] select-none">
-                Details restricted. Requires Omega-level clearance to view
-                deployment parameters regarding the Mjolnir initiative.
-              </p>
-              <div
-                class="absolute inset-x-0 h-full top-0 flex items-center justify-center pointer-events-none"
-              >
-                <Badge
-                  variant="destructive"
-                  className="rounded-none font-mono tracking-widest uppercase"
-                  >CLASSIFIED</Badge
-                >
-              </div>
-            </li>
-
-            <li class="pl-4 border-l border-primary/30 relative">
-              <span
-                class="absolute w-2 h-2 bg-primary left-[-4px] top-1 bg-green-500 shadow-[0_0_5px_rgba(34,197,94,1)]"
-              ></span>
-              <div
-                class="flex justify-between text-xs text-muted-foreground mb-1 uppercase tracking-widest"
-              >
-                <span class="text-primary">2794.PRESENT</span>
-                <span>UESC Marathon</span>
-              </div>
-              <p>Assigned to stasis block 2. Awaiting awakening procedures.</p>
-            </li>
-          </ul>
-        </section>
-
-        <!-- Warning Section -->
-        <div
-          class="mt-4 border border-destructive/50 bg-destructive/10 p-4 p-6 relative overflow-hidden"
-        >
-          <div class="absolute left-0 top-0 bottom-0 w-2 bg-destructive"></div>
-          <h3
-            class="font-sans text-xl font-bold uppercase text-destructive tracking-widest mb-2 flex items-center gap-2"
-          >
-            <span class="animate-pulse block w-3 h-3 bg-destructive"></span>
-            Psychological Evaluation Alert
-          </h3>
-          <p class="font-mono text-sm text-foreground pt-2">
-            Recent scans indicate elevated stress patterns and potential neural
-            degradation consistent with deep-sleep side effects. Subject is to
-            be monitored closely for aggressive tendencies upon revival.
-            Repeated interactions with rampancy-prone AI cores <Skeleton
-              className="h-4 w-[60px] inline-block align-middle rounded-none bg-foreground/20"
-            /> strongly discouraged.
-          </p>
-        </div>
       </div>
     </div>
   </div>

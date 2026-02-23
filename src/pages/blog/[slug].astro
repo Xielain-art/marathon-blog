@@ -274,11 +274,12 @@ const postTitle = slug
     const bar = document.getElementById(
       "reading-progress",
     ) as HTMLElement | null;
-    if (!bar) return;
     function updateBar() {
       const scrolled = window.scrollY;
       const total = document.documentElement.scrollHeight - window.innerHeight;
       const pct = total > 0 ? (scrolled / total) * 100 : 0;
+      if (!bar) return;
+
       bar.style.width = pct.toFixed(2) + "%";
     }
     window.addEventListener("scroll", updateBar, { passive: true });
