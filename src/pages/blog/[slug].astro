@@ -28,6 +28,14 @@ const postTitle = slug
 ---
 
 <Layout>
+  <!-- Reading Progress Bar -->
+  <div
+    id="reading-progress"
+    class="fixed top-0 left-0 h-[2px] bg-primary z-60 w-0 transition-none"
+    style="box-shadow: 0 0 8px rgba(var(--primary), 0.8);"
+  >
+  </div>
+
   <article class="max-w-3xl w-full mx-auto flex flex-col gap-8">
     <!-- Article Header -->
     <header class="border-b border-primary/20 pb-8 relative">
@@ -260,3 +268,20 @@ const postTitle = slug
     </section>
   </article>
 </Layout>
+
+<script>
+  (function () {
+    const bar = document.getElementById(
+      "reading-progress",
+    ) as HTMLElement | null;
+    if (!bar) return;
+    function updateBar() {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (scrolled / total) * 100 : 0;
+      bar.style.width = pct.toFixed(2) + "%";
+    }
+    window.addEventListener("scroll", updateBar, { passive: true });
+    updateBar();
+  })();
+</script>

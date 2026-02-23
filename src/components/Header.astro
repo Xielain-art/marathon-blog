@@ -1,6 +1,18 @@
 ---
 import { Badge } from "@/components/ui/badge";
 import { UserMenu } from "@/components/UserMenu";
+
+const pathname = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
+const navLinks = [
+  { href: "/blog", label: "News & Logs" },
+  { href: "/about", label: "Operative Profile" },
+];
 ---
 
 <header
@@ -14,7 +26,7 @@ import { UserMenu } from "@/components/UserMenu";
         href="/"
         class="text-lg sm:text-xl font-mono font-bold text-primary tracking-widest uppercase hover:text-primary/80 transition-colors"
       >
-        >_MARATHON
+        &gt;_MARATHON<span class="animate-blink">_</span>
       </a>
       <Badge
         variant="outline"
@@ -23,33 +35,37 @@ import { UserMenu } from "@/components/UserMenu";
         NETWORK STATUS: SECURE
       </Badge>
     </div>
+
     <nav
       class="hidden md:flex items-center gap-4 md:gap-6 font-mono text-xs sm:text-sm uppercase tracking-widest"
     >
-      <a
-        href="/blog"
-        class="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
-      >
-        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
-          >]</span
-        >
-        Databanks
-        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
-          >[</span
-        >
-      </a>
-      <a
-        href="/about"
-        class="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
-      >
-        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
-          >]</span
-        >
-        Personnel
-        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
-          >[</span
-        >
-      </a>
+      {
+        navLinks.map((link) => {
+          const active = isActive(link.href);
+          return (
+            <a
+              href={link.href}
+              class={`transition-colors flex items-center gap-1 group relative
+              ${
+                active
+                  ? "text-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]"
+                  : "text-muted-foreground hover:text-primary"
+              }`}
+            >
+              <span class="opacity-0 group-hover:opacity-100 transition-opacity">
+                ]
+              </span>
+              {link.label}
+              <span class="opacity-0 group-hover:opacity-100 transition-opacity">
+                [
+              </span>
+              {active && (
+                <span class="absolute -bottom-[1px] left-0 w-full h-px bg-primary" />
+              )}
+            </a>
+          );
+        })
+      }
 
       <div class="h-4 w-px bg-border/50 mx-2 hidden sm:block"></div>
 

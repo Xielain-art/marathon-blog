@@ -1,32 +1,40 @@
 ---
+const pathname = Astro.url.pathname;
 
+const links = [
+  { href: "/", label: "[ BASE ]" },
+  { href: "/blog", label: "[ NEWS ]" },
+  { href: "/about", label: "[ PROFILE ]" },
+  { href: "/create", label: "[ ADD+ ]" },
+];
+
+function isActive(href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
 ---
 
 <nav
   class="fixed bottom-0 left-0 w-full h-14 bg-background/95 backdrop-blur border-t border-border/50 z-50 flex md:hidden items-center justify-around font-mono text-xs uppercase"
 >
-  <a
-    href="/"
-    class="flex-1 h-full flex items-center justify-center border-r border-border/50 hover:bg-primary/5 hover:text-primary transition-colors"
-  >
-    [ BASE ]
-  </a>
-  <a
-    href="/blog"
-    class="flex-1 h-full flex items-center justify-center border-r border-border/50 hover:bg-primary/5 hover:text-primary transition-colors"
-  >
-    [ LOGS ]
-  </a>
-  <a
-    href="/about"
-    class="flex-1 h-full flex items-center justify-center border-r border-border/50 hover:bg-primary/5 hover:text-primary transition-colors"
-  >
-    [ USER ]
-  </a>
-  <a
-    href="/create"
-    class="flex-1 h-full flex items-center justify-center hover:bg-primary/5 hover:text-primary transition-colors"
-  >
-    [ ADD+ ]
-  </a>
+  {
+    links.map((link, i) => {
+      const active = isActive(link.href);
+      const isLast = i === links.length - 1;
+      return (
+        <a
+          href={link.href}
+          class={`flex-1 h-full flex items-center justify-center transition-colors relative
+          ${!isLast ? "border-r border-border/50" : ""}
+          ${
+            active
+              ? "text-primary bg-primary/10 border-t-2 border-t-primary"
+              : "text-muted-foreground opacity-70 hover:bg-primary/5 hover:text-primary hover:opacity-100"
+          }`}
+        >
+          {link.label}
+        </a>
+      );
+    })
+  }
 </nav>
