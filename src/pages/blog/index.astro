@@ -1,10 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import PostCard from "@/components/PostCard.astro";
 
 const posts = [
   {
@@ -74,9 +74,9 @@ const categories = [
         04
       </div>
       <h1
-        class="text-3xl font-bold font-sans tracking-widest text-primary uppercase mb-2 relative z-10"
+        class="text-2xl sm:text-3xl font-bold font-sans tracking-widest text-primary uppercase mb-2 relative z-10"
       >
-        Ship Logs & Transmissions
+        Ship Logs &amp; Transmissions
       </h1>
       <p
         class="font-mono text-muted-foreground text-sm uppercase relative z-10"
@@ -87,7 +87,7 @@ const categories = [
 
     <!-- Search & Filter Section -->
     <div
-      class="bg-card/50 border border-border/50 p-6 flex flex-col gap-6 relative overflow-hidden"
+      class="bg-card/50 border border-border/50 p-4 sm:p-6 flex flex-col gap-6 relative overflow-hidden"
     >
       <div class="absolute inset-0 bg-primary/5 pattern-grid-lg opacity-50">
       </div>
@@ -97,14 +97,15 @@ const categories = [
         <div class="flex flex-col gap-2">
           <Label
             className="font-mono text-xs text-muted-foreground tracking-widest uppercase"
-            >DATABANK CLASSIFICATION</Label
           >
+            DATABANK CLASSIFICATION
+          </Label>
           <div class="flex flex-wrap gap-2">
             {
               categories.map((cat, i) => (
                 <Button
                   variant={i === 0 ? "default" : "outline"}
-                  className={`rounded-none font-mono text-xs uppercase tracking-widest h-8 ${i !== 0 ? "border-border/50 text-muted-foreground hover:text-primary" : ""}`}
+                  className={`rounded-none font-mono text-xs uppercase tracking-widest h-10 ${i !== 0 ? "border-border/50 text-muted-foreground hover:text-primary" : ""}`}
                 >
                   [{cat}]
                 </Button>
@@ -124,93 +125,18 @@ const categories = [
             <span class="w-2 h-2 bg-primary animate-pulse"></span>
             Query Local Databanks
           </Label>
-          <div class="flex gap-4 w-full max-w-full">
-            <Input
-              id="search"
-              placeholder="ENTER SEARCH TERMS..."
-              className="font-mono rounded-none border-primary/50 bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase text-primary placeholder:text-primary/30 w-full max-w-full"
-            />
-          </div>
+          <Input
+            id="search"
+            placeholder="ENTER SEARCH TERMS..."
+            className="font-mono rounded-none border-primary/50 bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase text-primary placeholder:text-primary/30 w-full h-12"
+          />
         </div>
       </div>
     </div>
 
     <!-- Results Grid -->
     <div class="grid grid-cols-1 gap-6 mt-4">
-      {
-        posts.map((post) => (
-          <Card className="rounded-none border-border/50 bg-card hover:border-primary/50 transition-colors flex flex-col md:flex-row group relative overflow-hidden h-full">
-            <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-
-            {/* Thumbnail Placeholder */}
-            <div class="hidden md:flex flex-col items-center justify-center w-48 border-r border-border/50 bg-secondary/10 relative overflow-hidden">
-              <div class="absolute inset-0 bg-primary/5 pattern-grid-lg opacity-20 group-hover:opacity-40 transition-opacity" />
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="text-muted-foreground/30 group-hover:text-primary/50 transition-colors relative z-10"
-              >
-                <>
-                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                  <circle cx="9" cy="9" r="2" />
-                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                </>
-              </svg>
-              <span class="mt-4 font-mono text-[10px] text-muted-foreground/50 tracking-widest uppercase relative z-10 group-hover:text-primary/50 transition-colors">
-                NO IMAGE DATA
-              </span>
-            </div>
-
-            <div class="flex-1 flex flex-col justify-between py-2">
-              <CardHeader className="pb-2">
-                <div class="flex flex-wrap gap-2 mb-2">
-                  {post.tags.map((tag) => (
-                    <Badge
-                      variant={
-                        tag === "SECURITY WARNING" ? "destructive" : "secondary"
-                      }
-                      className="rounded-none text-[10px] uppercase font-mono tracking-wider"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                  <Badge
-                    variant="outline"
-                    className="rounded-none text-[10px] uppercase font-mono border-border text-muted-foreground ml-auto"
-                  >
-                    {post.date}
-                  </Badge>
-                </div>
-                <CardTitle className="font-sans text-2xl uppercase tracking-tight group-hover:text-primary transition-colors">
-                  <a
-                    href={`/blog/${post.slug}`}
-                    class="before:absolute before:inset-0"
-                  >
-                    {post.title}
-                  </a>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p class="font-mono text-sm text-foreground/80 line-clamp-2 md:line-clamp-3">
-                  {post.excerpt}
-                </p>
-              </CardContent>
-            </div>
-
-            <div class="hidden md:flex flex-col items-center justify-center p-6 border-l border-border/50 bg-secondary/5 group-hover:bg-primary/5 transition-colors min-w-[80px]">
-              <span class="text-primary font-mono text-xs tracking-widest uppercase rotate-90 whitespace-nowrap opacity-50 group-hover:opacity-100 transition-opacity transform origin-center">
-                Access
-              </span>
-            </div>
-          </Card>
-        ))
-      }
+      {posts.map((post) => <PostCard post={post} variant="list" />)}
     </div>
 
     <!-- Pagination (Mock) -->
@@ -224,7 +150,7 @@ const categories = [
       <div class="flex gap-2 text-primary">
         <span class="opacity-50 cursor-not-allowed">&lt; PREV</span>
         <span>|</span>
-        <span class="hover:underline cursor-pointer">NEXT ></span>
+        <span class="hover:underline cursor-pointer">NEXT &gt;</span>
       </div>
     </div>
   </div>

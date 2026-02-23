@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import TerminalWindow from "@/components/TerminalWindow.astro";
 import {
-  Card,
   CardHeader,
   CardTitle,
   CardContent,
@@ -14,29 +14,9 @@ import { Label } from "@/components/ui/label";
 
 <Layout>
   <div
-    class="flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto"
+    class="flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto px-0"
   >
-    <Card
-      className="w-full rounded-none border-primary/50 bg-card/60 backdrop-blur shadow-[0_0_30px_rgba(var(--primary),0.1)] relative overflow-hidden"
-    >
-      <!-- Decorative Corners -->
-      <div
-        class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary"
-      >
-      </div>
-      <div
-        class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary"
-      >
-      </div>
-      <div
-        class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-primary"
-      >
-      </div>
-      <div
-        class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary"
-      >
-      </div>
-
+    <TerminalWindow>
       <CardHeader
         className="border-b border-primary/20 pb-3 md:pb-4 text-center space-y-2"
       >
@@ -67,7 +47,7 @@ import { Label } from "@/components/ui/label";
             <Input
               id="operativeId"
               placeholder="ENTER DESIGNATION"
-              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase h-12"
+              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary uppercase h-12 w-full"
             />
           </div>
 
@@ -82,7 +62,7 @@ import { Label } from "@/components/ui/label";
               id="accessCode"
               type="password"
               placeholder="••••••••••••"
-              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary tracking-widest h-12"
+              className="font-mono rounded-none border-border bg-background/50 focus-visible:ring-primary focus-visible:border-primary tracking-widest h-12 w-full"
             />
           </div>
 
@@ -105,7 +85,7 @@ import { Label } from "@/components/ui/label";
           Request Access (Register)
         </a>
       </CardFooter>
-    </Card>
+    </TerminalWindow>
 
     <div
       class="mt-4 font-mono text-[10px] sm:text-xs text-muted-foreground/50 uppercase tracking-widest text-center max-w-[300px]"
