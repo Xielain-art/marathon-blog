@@ -39,6 +39,28 @@ import { Separator } from "@/components/ui/separator";
       </p>
     </div>
 
+    <!-- Breadcrumbs & System Hint -->
+    <div class="flex flex-col gap-4">
+      <nav
+        class="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-muted-foreground/60 uppercase"
+      >
+        SYS.PATH: <span class="text-primary/40">ROOT</span> /
+        <span class="text-primary/40">CONFIG</span> /
+        <span class="text-primary">PARAMETERS</span>
+      </nav>
+
+      <div
+        class="border-l-2 border-primary bg-primary/5 p-3 sm:p-4 backdrop-blur-sm"
+      >
+        <p
+          class="font-mono text-xs sm:text-sm text-foreground/70 leading-relaxed uppercase tracking-wider"
+        >
+          <span class="text-primary font-bold mr-2">SYSTEM OVERRIDE:</span>
+          Конфигурация локального интерфейса и управление параметрами аккаунта.
+        </p>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <!-- Interface Settings -->
       <section class="flex flex-col gap-6">
@@ -190,6 +212,7 @@ import { Separator } from "@/components/ui/separator";
               </div>
 
               <Button
+                id="overwrite-btn"
                 type="button"
                 className="w-full h-12 rounded-none font-mono text-sm uppercase tracking-widest mt-2 border border-primary hover:bg-primary hover:text-primary-foreground transition-all"
                 variant="outline"
@@ -233,6 +256,7 @@ import { Separator } from "@/components/ui/separator";
             </p>
           </div>
           <Button
+            id="purge-btn"
             type="button"
             variant="destructive"
             className="rounded-none font-mono tracking-widest uppercase md:w-auto w-full whitespace-nowrap"
@@ -244,3 +268,52 @@ import { Separator } from "@/components/ui/separator";
     </section>
   </div>
 </Layout>
+
+<script>
+  import { toast } from "sonner";
+
+  // Overwrite Credentials
+  const overwriteBtn = document.getElementById(
+    "overwrite-btn",
+  ) as HTMLButtonElement;
+  if (overwriteBtn) {
+    overwriteBtn.addEventListener("click", () => {
+      const originalText = overwriteBtn.innerText;
+      overwriteBtn.innerText = "ENCRYPTING NEW CODE...";
+      overwriteBtn.disabled = true;
+
+      setTimeout(() => {
+        toast.success("CREDENTIALS UPDATED", {
+          description: "LOCAL ACCESS PROTOCOLS MODIFIED SUCCESSFULLY.",
+          className:
+            "font-mono uppercase tracking-widest border-primary bg-background text-primary rounded-none",
+        });
+        overwriteBtn.innerText = originalText;
+        overwriteBtn.disabled = false;
+        const form = overwriteBtn.closest("form");
+        if (form) form.reset();
+      }, 1500);
+    });
+  }
+
+  // Purge Profile
+  const purgeBtn = document.getElementById("purge-btn") as HTMLButtonElement;
+  if (purgeBtn) {
+    purgeBtn.addEventListener("click", () => {
+      const originalText = purgeBtn.innerText;
+      purgeBtn.innerText = "PURGING DATA...";
+      purgeBtn.disabled = true;
+
+      setTimeout(() => {
+        toast.error("DATA PURGE COMPLETE", {
+          description:
+            "ALL OPERATIVE LOGS HAVE BEEN ERASED FROM UESC DIRECTORY.",
+          className:
+            "font-mono uppercase tracking-widest border-destructive bg-background text-destructive rounded-none",
+        });
+        purgeBtn.innerText = originalText;
+        purgeBtn.disabled = false;
+      }, 2000);
+    });
+  }
+</script>

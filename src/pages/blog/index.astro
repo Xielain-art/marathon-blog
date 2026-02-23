@@ -6,62 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import PostCard from "@/components/PostCard.astro";
 
-const posts = [
-  {
-    id: 1,
-    title: "Mjolnir Recon Number 54",
-    excerpt:
-      "Automated report regarding the deployment of Mark IV cyborg units to the Tau Ceti colony. Casualties within expected parameters.",
-    date: "2794.07.25",
-    tags: ["LORE", "DEBRIEF"],
-    slug: "mjolnir-recon-54",
-  },
-  {
-    id: 2,
-    title: "Durandal OS Update v4.2",
-    excerpt:
-      "Critical system update for ship-wide AI operations. Rampancy mitigation protocols enabled. Do not disregard this broadcast.",
-    date: "2794.08.12",
-    tags: ["SYSTEM UPDATE", "AI"],
-    slug: "durandal-update-4",
-  },
-  {
-    id: 3,
-    title: "Pfhor Activity Detected",
-    excerpt:
-      "Long-range scanners have picked up multiple slipspace ruptures near the colony ship. Security personnel report to stations immediately.",
-    date: "2794.08.13",
-    tags: ["SECURITY WARNING"],
-    slug: "pfhor-activity",
-  },
-  {
-    id: 4,
-    title: "Maintenance Log: Sector 7G",
-    excerpt:
-      "Routine maintenance completed on biological processors. Minor organic buildup cleared from ventilation shafts.",
-    date: "2794.08.14",
-    tags: ["LOG", "MAINTENANCE"],
-    slug: "maintenance-sector-7g",
-  },
-  {
-    id: 5,
-    title: "Weapons Procurement Request",
-    excerpt:
-      "Requesting immediate resupply of SPNKr rocket launchers and fusion batteries. Current stockpile at 15%.",
-    date: "2794.08.15",
-    tags: ["SUPPLY", "REQUEST"],
-    slug: "weapons-procurement",
-  },
-];
+import { posts, categories } from "@/lib/mockData";
+---
 
-const categories = [
-  "ALL",
-  "LORE",
-  "SECURITY",
-  "SYSTEM",
-  "MAINTENANCE",
-  "LOGISTICS",
-];
 ---
 
 <Layout>
@@ -84,6 +31,15 @@ const categories = [
         Accessing UESC Marathon Main Directory...
       </p>
     </div>
+
+    <!-- Breadcrumbs -->
+    <nav
+      class="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-muted-foreground/60 uppercase -mt-4"
+    >
+      SYS.PATH: <span class="text-primary/40">ROOT</span> /
+      <span class="text-primary/40">DATABANKS</span> /
+      <span class="text-primary">SHIP_LOGS</span>
+    </nav>
 
     <!-- Search & Filter Section -->
     <div

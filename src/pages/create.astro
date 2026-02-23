@@ -36,6 +36,28 @@ import { PrioritySelect } from "@/components/PrioritySelect";
         </p>
       </div>
 
+      <!-- Breadcrumbs & System Hint -->
+      <div class="flex flex-col gap-4 mb-2">
+        <nav
+          class="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-muted-foreground/60 uppercase text-left"
+        >
+          SYS.PATH: <span class="text-primary/40">ROOT</span> /
+          <span class="text-primary/40">DATABANKS</span> /
+          <span class="text-primary">NEW_DISPATCH</span>
+        </nav>
+
+        <div
+          class="border-l-2 border-primary bg-primary/5 p-3 sm:p-4 backdrop-blur-sm"
+        >
+          <p
+            class="font-mono text-xs sm:text-sm text-foreground/70 leading-relaxed uppercase tracking-wider"
+          >
+            <span class="text-primary font-bold mr-2">SYSTEM OVERRIDE:</span>
+            Используйте этот терминал для публикации новых записей в публичный блог.
+          </p>
+        </div>
+      </div>
+
       <Card
         className="rounded-none border-primary/50 bg-card/60 relative overflow-hidden"
       >
@@ -111,6 +133,7 @@ import { PrioritySelect } from "@/components/PrioritySelect";
                 SIGNAL ENCRYPTED & SECURE
               </span>
               <Button
+                id="publish-btn"
                 type="button"
                 className="h-14 px-8 rounded-none font-mono text-lg uppercase tracking-widest shadow-[0_0_15px_rgba(var(--primary),0.2)] hover:shadow-[0_0_25px_rgba(var(--primary),0.5)] transition-all"
               >
@@ -201,3 +224,34 @@ import { PrioritySelect } from "@/components/PrioritySelect";
     </aside>
   </div>
 </Layout>
+
+<script>
+  import { toast } from "sonner";
+
+  const publishBtn = document.getElementById(
+    "publish-btn",
+  ) as HTMLButtonElement;
+
+  if (publishBtn) {
+    publishBtn.addEventListener("click", () => {
+      const originalText = publishBtn.innerText;
+      publishBtn.innerText = "UPLOADING...";
+      publishBtn.disabled = true;
+
+      setTimeout(() => {
+        toast.success("TRANSMISSION SUCCESSFUL", {
+          description: "DISPATCH LOGGED IN CENTRAL DATABANKS.",
+          className:
+            "font-mono uppercase tracking-widest border-primary bg-background text-primary rounded-none",
+        });
+
+        publishBtn.innerText = originalText;
+        publishBtn.disabled = false;
+
+        // Clear form or redirect
+        const form = publishBtn.closest("form");
+        if (form) form.reset();
+      }, 1500);
+    });
+  }
+</script>

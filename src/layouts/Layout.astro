@@ -4,6 +4,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import MobileNav from "@/components/MobileNav.astro";
 import { ClientRouter } from "astro:transitions";
+import { Toaster } from "@/components/ui/sonner";
 ---
 
 <!doctype html>
@@ -37,5 +38,6 @@ import { ClientRouter } from "astro:transitions";
 
     <Footer />
     <MobileNav />
+    <Toaster client:load />
   </body>
 </html>

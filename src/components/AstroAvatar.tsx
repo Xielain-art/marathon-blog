@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface AstroAvatarProps {

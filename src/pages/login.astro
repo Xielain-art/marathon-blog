@@ -67,6 +67,7 @@ import { Label } from "@/components/ui/label";
           </div>
 
           <Button
+            id="login-btn"
             type="button"
             className="w-full h-12 sm:h-14 rounded-none font-mono text-base sm:text-lg uppercase tracking-[0.2em] mt-2 shadow-[0_0_10px_rgba(var(--primary),0.3)] hover:shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-all"
           >
@@ -94,3 +95,30 @@ import { Label } from "@/components/ui/label";
     </div>
   </div>
 </Layout>
+
+<script>
+  import { toast } from "sonner";
+
+  const loginBtn = document.getElementById("login-btn") as HTMLButtonElement;
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
+      const originalText = loginBtn.innerText;
+      loginBtn.innerText = "ENCRYPTING...";
+      loginBtn.disabled = true;
+
+      setTimeout(() => {
+        toast.success("ACCESS GRANTED", {
+          description: "OPERATIVE IDENTITY VERIFIED. WELCOME BACK.",
+          className:
+            "font-mono uppercase tracking-widest border-primary bg-background text-primary rounded-none",
+        });
+
+        loginBtn.innerText = originalText;
+        loginBtn.disabled = false;
+
+        // Minor delay before "redirecting" logic would go here
+      }, 1500);
+    });
+  }
+</script>

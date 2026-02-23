@@ -79,6 +79,7 @@ import { Label } from "@/components/ui/label";
           </div>
 
           <Button
+            id="register-btn"
             type="button"
             className="w-full h-12 sm:h-14 rounded-none font-mono text-sm sm:text-base uppercase tracking-widest mt-2 bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground border border-transparent hover:border-primary transition-all"
           >
@@ -100,3 +101,30 @@ import { Label } from "@/components/ui/label";
     </TerminalWindow>
   </div>
 </Layout>
+
+<script>
+  import { toast } from "sonner";
+
+  const registerBtn = document.getElementById(
+    "register-btn",
+  ) as HTMLButtonElement;
+
+  if (registerBtn) {
+    registerBtn.addEventListener("click", () => {
+      const originalText = registerBtn.innerText;
+      registerBtn.innerText = "PROCESSING...";
+      registerBtn.disabled = true;
+
+      setTimeout(() => {
+        toast.success("REGISTRATION COMPLETE", {
+          description: "UESC FORM 7A SUBMITTED. CLEARANCE LEVEL 1 GRANTED.",
+          className:
+            "font-mono uppercase tracking-widest border-primary bg-background text-primary rounded-none",
+        });
+
+        registerBtn.innerText = originalText;
+        registerBtn.disabled = false;
+      }, 1500);
+    });
+  }
+</script>
