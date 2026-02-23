@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { PrioritySelect } from "@/components/PrioritySelect";
 ---
 
 <Layout>
@@ -60,34 +60,30 @@ import { Separator } from "@/components/ui/separator";
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="flex flex-col gap-3">
                 <Label
-                  htmlFor="category"
                   className="font-mono text-sm uppercase text-primary tracking-widest"
                 >
-                  CATEGORY / TAGS
+                  SYSTEM CLASSIFICATION
                 </Label>
-                <Input
-                  id="category"
-                  placeholder="e.g. LORE, SECURITY, LOG"
-                  className="font-mono rounded-none border-border bg-background/80 focus-visible:ring-primary focus-visible:border-primary uppercase"
-                />
+                <div
+                  class="font-mono rounded-none border border-primary/50 bg-primary/10 h-10 px-3 flex items-center shadow-[inset_0_0_10px_rgba(var(--primary),0.1)]"
+                >
+                  <span
+                    class="text-primary font-bold uppercase tracking-widest text-sm flex items-center gap-2"
+                  >
+                    <span class="block w-1.5 h-1.5 bg-primary"></span>
+                    AUTHOR CLEARANCE: LEVEL 2 (AUTO-DETECTED)
+                  </span>
+                </div>
               </div>
 
               <div class="flex flex-col gap-3">
                 <Label
-                  htmlFor="clearance"
                   className="font-mono text-sm uppercase text-destructive tracking-widest flex justify-between"
                 >
-                  <span>CLEARANCE LEVEL</span>
+                  <span>TRANSMISSION PRIORITY</span>
                   <span class="text-xs text-muted-foreground">REQ. AUTH</span>
                 </Label>
-                <select
-                  id="clearance"
-                  class="font-mono rounded-none border border-border bg-background/80 focus:ring-primary focus:border-primary uppercase text-foreground h-10 px-3 outline-none"
-                >
-                  <option value="public">PUBLIC (ALL OPERATIVES)</option>
-                  <option value="level3">RESTRICTED (LEVEL 3+)</option>
-                  <option value="omega">CLASSIFIED (OMEGA)</option>
-                </select>
+                <PrioritySelect client:load />
               </div>
             </div>
 

@@ -1,5 +1,6 @@
 ---
 import { Badge } from "@/components/ui/badge";
+import { UserMenu } from "@/components/UserMenu";
 ---
 
 <header
@@ -23,42 +24,36 @@ import { Badge } from "@/components/ui/badge";
       </Badge>
     </div>
     <nav
-      class="flex items-center gap-2 sm:gap-4 font-mono text-xs sm:text-sm uppercase"
+      class="flex items-center gap-4 md:gap-6 font-mono text-xs sm:text-sm uppercase tracking-widest"
     >
       <a
         href="/blog"
-        class="text-muted-foreground hover:text-primary transition-colors"
-        >Databanks</a
+        class="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
       >
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
+          >]</span
+        >
+        Databanks
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
+          >[</span
+        >
+      </a>
       <a
         href="/about"
-        class="text-muted-foreground hover:text-primary transition-colors"
+        class="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
       >
-        Archv
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
+          >]</span
+        >
+        Personnel
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity"
+          >[</span
+        >
       </a>
-      <a
-        href="/create"
-        class="text-primary hover:text-primary/80 transition-colors font-bold flex items-center gap-1"
-      >
-        <span class="text-xs">+</span>New
-      </a>
-      <a
-        href="/settings"
-        class="text-muted-foreground hover:text-primary transition-colors ml-2"
-        title="Settings"
-      >
-        [CFG]
-      </a>
-      <div class="h-4 w-px bg-border/50 mx-2"></div>
-      <a
-        href="/login"
-        class="text-primary hover:text-primary/80 transition-colors">Login</a
-      >
-      <a
-        href="/register"
-        class="text-muted-foreground hover:text-primary transition-colors"
-        >Register</a
-      >
+
+      <div class="h-4 w-px bg-border/50 mx-2 hidden sm:block"></div>
+
+      <UserMenu client:load />
     </nav>
   </div>
 </header>

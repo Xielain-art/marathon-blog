@@ -79,5 +79,24 @@
 
 @layer base {
   * { @apply border-border outline-ring/50; }
-  body { @apply bg-background text-foreground; }
+  body { 
+    @apply bg-background text-foreground;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--background);
+  }
+}
+
+/* Brutalist Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: oklch(0.13 0.01 150); /* Deep void black */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: oklch(0.85 0.30 145); /* Primary green */
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
