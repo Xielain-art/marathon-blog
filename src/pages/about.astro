@@ -12,32 +12,29 @@ const vitalStats = [
   { label: "Name", value: null, skeleton: true },
   { label: "ID Number", value: "M-4927A", highlight: true, blink: true },
   { label: "Status", value: "ACTIVE", green: true },
-  { label: "Rank", value: null, skeleton: true },
-  { label: "Clearance", value: "LEVEL 5", badge: true },
-  { label: "Dispatches", value: "2" },
+  { label: "User Role", value: "AUTHOR", badge: true },
+  { label: "Join Date", value: "2794.01.01" },
+  { label: "Total Dispatches", value: "2" },
   { label: "Net Status", value: "ONLINE", green: true },
 ];
 
 const historyEvents = [
   {
-    date: "2791.03.11",
-    location: "Martian Colonies",
-    desc: "Quelled uprising in biodome 4. Commendation for minimal structural damage during pacification.",
-    classified: false,
+    date: "2794.01",
+    title: "System Registration",
+    desc: "Operative successfully enlisted in the UESC Marathon databanks. Access credentials issued.",
     current: false,
   },
   {
-    date: "2792.11.04",
-    location: null, // skeleton
-    desc: "Details restricted. Requires Omega-level clearance to view deployment parameters regarding the Mjolnir initiative.",
-    classified: true,
+    date: "2794.05",
+    title: "First Dispatch Published",
+    desc: "Initial report transmitted to the global network. Received positive clearance from moderation AI.",
     current: false,
   },
   {
-    date: "2794.PRESENT",
-    location: "UESC Marathon",
-    desc: "Assigned to stasis block 2. Awaiting awakening procedures.",
-    classified: false,
+    date: "2794.08",
+    title: "Active Contributor",
+    desc: "Operative has filed multiple dispatches and appended entries to the transmission log. Status: Ongoing.",
     current: true,
   },
 ];
@@ -79,7 +76,9 @@ const userComments = [
 ---
 
 <Layout>
-  <div class="max-w-5xl w-full mx-auto flex flex-col gap-8 py-8">
+  <div
+    class="max-w-5xl w-full mx-auto flex flex-col gap-8 py-8 pb-24 md:pb-8 overflow-x-hidden"
+  >
     <!-- Page Header -->
     <div class="border-b-4 border-primary pb-4 relative overflow-hidden">
       <div
@@ -87,7 +86,7 @@ const userComments = [
       >
         USR
       </div>
-      <div class="flex justify-between items-end relative z-10">
+      <div class="flex flex-wrap justify-between items-end gap-2 relative z-10">
         <h1
           class="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter text-foreground"
         >
@@ -95,7 +94,7 @@ const userComments = [
         </h1>
         <Badge
           variant="destructive"
-          className="rounded-none font-mono text-xs mb-1 uppercase tracking-widest animate-pulse"
+          className="rounded-none font-mono text-xs uppercase tracking-widest animate-pulse"
         >
           Confidential
         </Badge>
@@ -111,18 +110,18 @@ const userComments = [
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
       <!-- ── LEFT SIDEBAR: ID Card ───────────────────────────────────────── -->
       <aside
-        class="flex flex-col gap-4 md:col-span-1 border border-primary/30 bg-secondary/10 p-4 sticky top-24"
+        class="flex flex-col gap-4 md:col-span-1 border border-primary/30 bg-secondary/10 p-4 md:sticky md:top-24"
       >
         <!-- Portrait Placeholder -->
         <div
-          class="w-full aspect-[3/4] bg-background border border-border relative overflow-hidden group"
+          class="w-full aspect-[3/4] bg-background border border-border relative overflow-hidden"
         >
           <div class="absolute inset-0 bg-primary/10 pattern-grid-lg"></div>
           <Skeleton
             className="w-full h-full rounded-none bg-primary/20 opacity-30"
           />
           <div
-            class="absolute inset-0 flex items-center justify-center font-mono text-primary rotate-45 select-none opacity-50 uppercase tracking-widest text-xl"
+            class="absolute inset-0 flex items-center justify-center font-mono text-primary rotate-45 select-none opacity-50 uppercase tracking-widest text-xl text-center break-all px-4"
           >
             NO IMAGE DATA
           </div>
@@ -137,22 +136,22 @@ const userComments = [
         <div class="flex flex-col gap-2 font-mono text-sm uppercase">
           {
             vitalStats.map((stat) => (
-              <div class="flex justify-between items-center border-b border-border/30 pb-1.5">
-                <span class="text-muted-foreground text-xs shrink-0 mr-2">
+              <div class="flex justify-between items-center gap-2 border-b border-border/30 pb-1.5 min-w-0">
+                <span class="text-muted-foreground text-xs shrink-0">
                   {stat.label}:
                 </span>
                 {stat.skeleton ? (
-                  <Skeleton className="h-4 w-24 rounded-none bg-primary/20" />
+                  <Skeleton className="h-4 w-full max-w-[100px] rounded-none bg-primary/20" />
                 ) : stat.badge ? (
                   <Badge
                     variant="outline"
-                    className="rounded-none text-[10px] border-primary text-primary px-1"
+                    className="rounded-none text-[10px] border-primary text-primary px-1 shrink-0"
                   >
                     {stat.value}
                   </Badge>
                 ) : (
                   <span
-                    class={`font-bold text-right truncate max-w-[60%]
+                    class={`font-bold text-right wrap-break-word min-w-0 overflow-hidden
                   ${stat.green ? "text-green-400" : ""}
                   ${stat.highlight ? "text-primary" : "text-foreground"}
                   ${stat.blink ? "animate-blink" : ""}
@@ -180,7 +179,7 @@ const userComments = [
       </aside>
 
       <!-- ── MAIN CONTENT ────────────────────────────────────────────────── -->
-      <div class="flex flex-col gap-10 md:col-span-2">
+      <div class="flex flex-col gap-10 md:col-span-2 min-w-0">
         <!-- ── Section 1: AUTHOR'S LOGS (User Posts) ───────────────────── -->
         <section class="flex flex-col gap-4">
           <div class="flex items-center gap-3 border-b border-primary/50 pb-2">
@@ -193,15 +192,25 @@ const userComments = [
             </h2>
             <Badge
               variant="outline"
-              className="ml-auto rounded-none text-[10px] font-mono border-border text-muted-foreground"
+              className="ml-auto rounded-none text-[10px] font-mono border-border text-muted-foreground shrink-0"
             >
-              2 RECORDS
+              {userPosts.length} RECORDS
             </Badge>
           </div>
 
-          <div class="grid grid-cols-1 gap-4">
-            {userPosts.map((post) => <PostCard post={post} />)}
-          </div>
+          {
+            userPosts.length > 0 ? (
+              <div class="grid grid-cols-1 gap-4">
+                {userPosts.map((post) => (
+                  <PostCard post={post} />
+                ))}
+              </div>
+            ) : (
+              <div class="border border-dashed border-border/50 p-8 text-center text-muted-foreground font-mono text-sm uppercase tracking-widest">
+                &gt; NO DATA FOUND FOR THIS QUERY
+              </div>
+            )
+          }
         </section>
 
         <!-- ── Section 2: NETWORK TRANSMISSIONS (Comments) ─────────────── -->
@@ -214,34 +223,40 @@ const userComments = [
             </h2>
             <Badge
               variant="secondary"
-              className="ml-auto rounded-none text-[10px] font-mono"
+              className="ml-auto rounded-none text-[10px] font-mono shrink-0"
             >
               {userComments.length} ENTRIES
             </Badge>
           </div>
 
-          <div class="flex flex-col gap-3">
-            {
-              userComments.map((comment) => (
-                <div class="flex flex-col gap-2 p-4 border-l-2 border-primary bg-primary/5 relative overflow-hidden">
-                  <div class="flex flex-wrap justify-between items-center font-mono text-xs uppercase gap-2">
-                    <a
-                      href={`/blog/${comment.targetSlug}`}
-                      class="text-primary hover:underline underline-offset-4 decoration-primary truncate max-w-[70%]"
-                    >
-                      RE: {comment.targetTitle}
-                    </a>
-                    <span class="text-muted-foreground shrink-0">
-                      {comment.date}
-                    </span>
+          {
+            userComments.length > 0 ? (
+              <div class="flex flex-col gap-3">
+                {userComments.map((comment) => (
+                  <div class="flex flex-col gap-2 p-4 border-l-2 border-primary bg-primary/5 min-w-0">
+                    <div class="flex flex-wrap justify-between items-center font-mono text-xs uppercase gap-2">
+                      <a
+                        href={`/blog/${comment.targetSlug}`}
+                        class="text-primary hover:underline underline-offset-4 decoration-primary wrap-break-word min-w-0"
+                      >
+                        RE: {comment.targetTitle}
+                      </a>
+                      <span class="text-muted-foreground shrink-0">
+                        {comment.date}
+                      </span>
+                    </div>
+                    <p class="font-mono text-sm text-foreground/80 leading-relaxed wrap-break-word">
+                      "{comment.excerpt}"
+                    </p>
                   </div>
-                  <p class="font-mono text-sm text-foreground/80 leading-relaxed">
-                    "{comment.excerpt}"
-                  </p>
-                </div>
-              ))
-            }
-          </div>
+                ))}
+              </div>
+            ) : (
+              <div class="border border-dashed border-border/50 p-8 text-center text-muted-foreground font-mono text-sm uppercase tracking-widest">
+                &gt; NO DATA FOUND FOR THIS QUERY
+              </div>
+            )
+          }
         </section>
 
         <!-- ── Section 3: RESTRICTED DOSSIER ─────────────────────────── -->
@@ -284,13 +299,13 @@ const userComments = [
                     >[REDACTED EVENT LOG]</span
                   >
                   <Skeleton
-                    className="h-4 w-[150px] inline-block rounded-none bg-foreground/20"
+                    className="h-4 w-full max-w-[150px] inline-block rounded-none bg-foreground/20"
                   />
                   <Skeleton
-                    className="h-4 w-[100px] inline-block rounded-none bg-foreground/20"
+                    className="h-4 w-full max-w-[100px] inline-block rounded-none bg-foreground/20"
                   />
                   <Skeleton
-                    className="h-4 w-[60px] inline-block rounded-none bg-foreground/20"
+                    className="h-4 w-full max-w-[60px] inline-block rounded-none bg-foreground/20"
                   />
                   during the Tau Ceti orbit cycle.
                 </p>
@@ -299,59 +314,41 @@ const userComments = [
 
             <Separator className="bg-border/20" />
 
-            <!-- Service History Timeline (data-driven) -->
+            <!-- Activity Audit Log Timeline (data-driven) -->
             <div class="flex flex-col gap-3">
               <h3
                 class="font-mono text-xs font-bold text-primary uppercase tracking-widest"
               >
-                // Service History
+                // Activity Audit Log
               </h3>
               <ul
                 class="font-mono text-sm text-foreground/80 flex flex-col gap-5 list-none p-0"
               >
                 {
                   historyEvents.map((event) => (
-                    <li class="pl-4 border-l border-primary/30 relative">
+                    <li class="pl-4 border-l border-primary/30 relative min-w-0">
                       <span
-                        class={`absolute w-2 h-2 left-[-5px] top-1 block
-                      ${event.current ? "bg-green-500 shadow-[0_0_5px_rgba(34,197,94,1)]" : "bg-primary"}
+                        class={`absolute w-2 h-2 left-[-5px] top-1 block shrink-0
+                      ${
+                        event.current
+                          ? "bg-green-500 shadow-[0_0_5px_rgba(34,197,94,1)]"
+                          : "bg-primary"
+                      }
                     `}
                       />
-
                       <div class="flex flex-wrap justify-between text-xs text-muted-foreground mb-1 uppercase tracking-widest gap-1">
-                        <span class={event.current ? "text-primary" : ""}>
+                        <span
+                          class={`${event.current ? "text-primary" : ""} shrink-0`}
+                        >
                           {event.date}
                         </span>
-                        {event.location ? (
-                          <span class="truncate max-w-[60%]">
-                            {event.location}
-                          </span>
-                        ) : (
-                          <Skeleton className="h-3 w-[120px] rounded-none bg-foreground/20" />
-                        )}
+                        <span class="font-bold text-foreground truncate max-w-[55%]">
+                          {event.title}
+                        </span>
                       </div>
-
-                      <div class="relative">
-                        <p
-                          class={
-                            event.classified
-                              ? "opacity-40 blur-[2px] select-none"
-                              : ""
-                          }
-                        >
-                          {event.desc}
-                        </p>
-                        {event.classified && (
-                          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <Badge
-                              variant="destructive"
-                              className="rounded-none font-mono tracking-widest uppercase"
-                            >
-                              CLASSIFIED
-                            </Badge>
-                          </div>
-                        )}
-                      </div>
+                      <p class="wrap-break-word leading-relaxed">
+                        {event.desc}
+                      </p>
                     </li>
                   ))
                 }
@@ -360,30 +357,28 @@ const userComments = [
 
             <Separator className="bg-border/20" />
 
-            <!-- Psychological Evaluation Alert -->
+            <!-- Compliance & Security Status -->
             <div
-              class="border border-destructive/50 bg-destructive/10 p-4 relative overflow-hidden"
+              class="border border-primary/40 bg-primary/5 p-4 relative overflow-hidden"
             >
-              <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-destructive">
+              <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary">
               </div>
               <h3
-                class="font-sans text-base font-bold uppercase text-destructive tracking-widest mb-2 flex items-center gap-2 pl-2"
+                class="font-sans text-base font-bold uppercase text-primary tracking-widest mb-2 flex items-center gap-2 pl-2"
               >
-                <span
-                  class="animate-pulse block w-2.5 h-2.5 bg-destructive shrink-0"
-                ></span>
-                Psychological Evaluation Alert
+                <span class="block w-2.5 h-2.5 bg-primary shrink-0"></span>
+                Compliance &amp; Security Status
               </h3>
               <p
                 class="font-mono text-sm text-foreground/80 pl-2 leading-relaxed"
               >
-                Recent scans indicate elevated stress patterns and potential
-                neural degradation consistent with deep-sleep side effects.
-                Subject is to be monitored closely for aggressive tendencies
-                upon revival. Repeated interactions with rampancy-prone AI
-                cores&nbsp;<Skeleton
-                  className="h-4 w-[50px] inline-block align-middle rounded-none bg-foreground/20"
-                />&nbsp;strongly discouraged.
+                <span class="text-primary font-bold"
+                  >ACCOUNT IN GOOD STANDING.</span
+                > No violations of UESC network protocols detected. Operative is cleared
+                for unrestricted publishing access. Zero infractions recorded. Security
+                clearance renewed <Skeleton
+                  className="h-4 w-[50px] inline-block align-middle rounded-none bg-primary/20"
+                /> cycles ago.
               </p>
             </div>
           </div>
